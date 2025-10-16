@@ -150,8 +150,8 @@ public:
 	char** segment_bitmap; //bitmap to store information which segment is in GPU
 
 	vector<vector<int>> columns_in_table;
-	int** segment_min;
-	int** segment_max;
+	int ** segment_min;
+	int  ** segment_max;
 
 	int *h_lo_orderkey, *h_lo_orderdate, *h_lo_custkey, *h_lo_suppkey, *h_lo_partkey, *h_lo_revenue, *h_lo_discount, *h_lo_quantity, *h_lo_extendedprice, *h_lo_supplycost;
 	int *h_c_custkey, *h_c_nation, *h_c_region, *h_c_city;

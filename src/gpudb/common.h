@@ -29,7 +29,7 @@ using namespace tbb;
 #define SF 40
 #define NUM_EVENTS 2
 
-#define BASE_PATH "/home/ubuntu/Mordred/test/ssb/data/"
+#define BASE_PATH "/home/huzam/Mordred/test/ssb/data/"
 
 #if SF == 1
 #define DATA_DIR BASE_PATH "s1_columnar/"

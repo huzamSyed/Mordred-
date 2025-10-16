@@ -14,7 +14,7 @@ using namespace std;
 
 #define SF 40
 
-#define BASE_PATH "/home/ubuntu/Mordred/test/ssb/data/"
+#define BASE_PATH "/home/huzam/Mordred/test/ssb/data/"
 
 #if SF == 1
 #define DATA_DIR BASE_PATH "s1_columnar/"
@@ -149,6 +149,7 @@ template<typename T>
 T* loadColumnSort(string col_name, int num_entries) {
   T* h_col = new T[((num_entries + SEGMENT_SIZE - 1)/SEGMENT_SIZE) * SEGMENT_SIZE];
   string filename = DATA_DIR + lookupSort(col_name);
+  std::cout<<" the file name is "<<filename<<std::endl;
   ifstream colData (filename.c_str(), ios::in | ios::binary);
   if (!colData) {
     return NULL;

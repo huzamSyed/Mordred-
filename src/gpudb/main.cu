@@ -22,7 +22,7 @@ int main() {
 	bool custom = true;
 	bool skipping = true;
 
-	cout << "Allocating " << size * 4 / 1024 / 1024 <<" MB GPU Cache and " << processing * 8 / 1024 / 1024 << " MB GPU Processing Region" << endl;
+	cout << "Alloc ating " << size * 4 / 1024 / 1024 <<" MB GPU Cache and " << processing * 8 / 1024 / 1024 << " MB GPU Processing Region" << endl;
 	
 	CPUGPUProcessing* cgp = new CPUGPUProcessing(size, processing, pinned, verbose, custom, skipping);
 	QueryProcessing* qp;
@@ -136,7 +136,7 @@ int main() {
 		} else if (input.compare("3") == 0) {
 			time = 0; malloc_time_total = 0; cpu_to_gpu = 0; gpu_to_cpu = 0; execution_time = 0; optimization_time = 0; merging_time = 0;
 			repl_traffic = 0;
-			cout << "How many queries per epoch (20 epoch in total): ";
+			cout << "How many queries per  epoch (20 epoch in total): ";
 			cin >> many;
 			many_query = stoi(many);
 
