@@ -12,48 +12,6 @@
 
 using namespace std;
 
-#define SF 40
-
-#define BASE_PATH "/home/ubuntu/Mordred/test/ssb/data/"
-
-#if SF == 1
-#define DATA_DIR BASE_PATH "s1_columnar/"
-#define LO_LEN 6001171
-//#define LO_LEN 1000
-#define P_LEN 200000
-#define S_LEN 2000
-#define C_LEN 30000
-#define D_LEN 2556
-#elif SF == 10
-#define DATA_DIR BASE_PATH "s10_columnar/"
-#define LO_LEN 59986214
-#define P_LEN 800000
-#define S_LEN 20000
-#define C_LEN 300000
-#define D_LEN 2556
-#elif SF == 20
-#define DATA_DIR BASE_PATH "s20_columnar/"
-#define LO_LEN 119994746
-#define P_LEN 1000000
-#define S_LEN 40000
-#define C_LEN 600000
-#define D_LEN 2556
-#elif SF == 40
-#define DATA_DIR BASE_PATH "s40_columnar/"
-#define LO_LEN 240012412
-#define P_LEN 1200000
-#define S_LEN 80000
-#define C_LEN 1200000
-#define D_LEN 2556
-#elif SF == 160
-#define DATA_DIR BASE_PATH "s160_columnar/"
-#define LO_LEN 960017453
-#define P_LEN 1600000
-#define S_LEN 320000
-#define C_LEN 4800000
-#define D_LEN 2556
-#endif
-
 #define SEGMENT_SIZE 1048576
 
 inline int index_of(string* arr, int len, string val) {

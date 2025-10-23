@@ -1,8 +1,10 @@
+include config.mk
+
 CUDA_PATH       ?= /usr/local/cuda
 CUDA_INC_PATH   ?= $(CUDA_PATH)/include
 CUDA_BIN_PATH   ?= $(CUDA_PATH)/bin
 
-NVCC = nvcc
+NVCC = $(CUDA_BIN_PATH)/nvcc
 
 #SM_TARGETS   = -gencode=arch=compute_52,code=\"sm_52,compute_52\" 
 # SM_DEF     = -DSM520
@@ -26,50 +28,58 @@ INC = includes
 CUB_DIR = cub/
 INCLUDES = -I$(CUB_DIR) -I$(CUB_DIR)test -I. -I$(INC)
 
+PREFLAGS = -DMOD_PATH=\"$(MOD_PATH)\" -DSF=$(SF)
+PREFLAGS += -DBASE_PATH=\"$(BASE_PATH)\" \
+          -DDATA_DIR=\"$(DATA_DIR)\" \
+          -DLO_LEN=$(LO_LEN) \
+          -DP_LEN=$(P_LEN) \
+          -DS_LEN=$(S_LEN) \
+          -DC_LEN=$(C_LEN) \
+          -DD_LEN=$(D_LEN)
 CFLAGS = -O3 -march=native -std=c++14 -ffast-math
 LDFLAGS = -ltbb
 CINCLUDES = -I$(INC)
 CXX = clang++
 
+
 $(OBJ)/%.o: $(SRC)/%.cu
-	$(NVCC) -lcurand -lcuda $(SM_TARGETS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
+	$(NVCC) -lcurand -lcuda $(SM_TARGETS) $(PREFLAGS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
 
 $(BIN)/%: $(OBJ)/%.o
-	$(NVCC) -ltbb -lcuda $(SM_TARGETS) -lcurand $^ -o $@
+	$(NVCC) -ltbb -lcuda $(SM_TARGETS) $(PREFLAGS) -lcurand $^ -o $@
 
 $(OBJ)/cpu/%.o: $(SRC)/cpu/%.cpp
-	$(NVCC) -lcurand $(SM_TARGETS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
+	$(NVCC) -lcurand $(SM_TARGETS) $(PREFLAGS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
 
 #$(CXX) $(CFLAGS) $(CINCLUDES) -c $< -o $@
 
 $(BIN)/cpu/%: $(OBJ)/cpu/%.o
-	$(NVCC) -ltbb $(SM_TARGETS) -lcurand $^ -o $@
-	
+	$(NVCC) -ltbb $(SM_TARGETS) $(PREFLAGS) -lcurand $^ -o $@
 #$(CXX) -ltbb $^ -o $@
 
 $(OBJ)/%.o: $(SRC)/%.cpp
-	$(NVCC) -lcurand -lcuda $(SM_TARGETS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
+	$(NVCC) -lcurand -lcuda $(SM_TARGETS) $(PREFLAGS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
 
 $(OBJ)/gpudb/CostModel.o: $(SRC)/gpudb/CostModel.cu
-	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
+	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(PREFLAGS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
 
 $(OBJ)/gpudb/QueryOptimizer.o: $(SRC)/gpudb/QueryOptimizer.cu
-	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
+	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(PREFLAGS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
 
 $(OBJ)/gpudb/QueryProcessing.o: $(SRC)/gpudb/QueryProcessing.cu
-	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
+	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(PREFLAGS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
 
 $(OBJ)/gpudb/CPUGPUProcessing.o: $(SRC)/gpudb/CPUGPUProcessing.cu
-	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
+	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(PREFLAGS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
 
 $(OBJ)/gpudb/CPUProcessing.o: $(SRC)/gpudb/CPUProcessing.cu
-	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
+	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(PREFLAGS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
 
 $(OBJ)/gpudb/main.o: $(SRC)/gpudb/main.cu
-	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
+	$(NVCC) -lcurand -lcuda -ltbb $(SM_TARGETS) $(PREFLAGS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
 
 $(BIN)/gpudb/main: $(OBJ)/gpudb/main.o $(OBJ)/gpudb/CacheManager.o $(OBJ)/gpudb/QueryOptimizer.o $(OBJ)/gpudb/CPUProcessing.o $(OBJ)/gpudb/CPUGPUProcessing.o $(OBJ)/gpudb/QueryProcessing.o $(OBJ)/gpudb/CostModel.o
-	$(NVCC) $(SM_TARGETS) -lcuda -ltbb -lcurand $^ -o $@
+	$(NVCC) $(SM_TARGETS) $(PREFLAGS) -lcuda -ltbb -lcurand $^ -o $@
 
 setup:
 	mkdir -p bin/ssb obj/ssb

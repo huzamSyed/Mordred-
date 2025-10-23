@@ -1,25 +1,13 @@
-SF=40
-
 # Make sure encoder is using right scale factor
 bin=bin/gpudb/minmax
 binsort=bin/gpudb/minmaxsort
 
-LO_LEN=240012412
-P_LEN=1200000
-S_LEN=80000
-C_LEN=1200000
-D_LEN=2556
+source ./config.mk
+if [ $? -ne 0 ]; then
+    echo "Error: failed to source config.mk"
+    exit 1
+fi
 
-#define P_LEN 1200000
-#define S_LEN 80000
-#define C_LEN 1200000
-#define D_LEN 2556
-
-# arr=("lo_custkey" "lo_partkey" "lo_suppkey" "lo_orderdate" "lo_quantity" "lo_extendedprice" "lo_discount" "lo_revenue" "lo_supplycost" "lo_orderkey" "lo_linenumber" "lo_tax" "lo_ordtotalprice" "lo_commitdate")
-# for val in ${arr[*]}; do
-#  echo $val
-#  $bin $val $LO_LEN
-# done
 
 arr=("lo_custkey" "lo_partkey" "lo_suppkey" "lo_orderdate" "lo_quantity" "lo_extendedprice" "lo_discount" "lo_revenue" "lo_supplycost" "lo_orderkey" "lo_linenumber" "lo_tax" "lo_ordtotalprice" "lo_commitdate")
 for val in ${arr[*]}; do

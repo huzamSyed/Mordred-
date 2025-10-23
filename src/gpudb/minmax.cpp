@@ -23,7 +23,9 @@ int main(int argc, char** argv) {
   cout << "Loaded Column " << col_name << endl;
 
   ofstream myfile;
-  myfile.open ("/home/ubuntu/Mordred/test/ssb/data/s" + sf + "_columnar/" + col_name + "minmax");
+  std::string fname = std::string{MOD_PATH} + "test/ssb/data/s" + sf + "_columnar/" + col_name + "minmax";
+  // std::cout << fname << std::endl;
+  myfile.open(fname);
 
   int total_segment = ((len + SEGMENT_SIZE - 1)/SEGMENT_SIZE);
 
