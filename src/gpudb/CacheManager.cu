@@ -1083,9 +1083,35 @@ CacheManager::newEpoch(double param) {
 };
 
 int
-CacheManager::cacheSpecificColumn(string column_name) {
+CacheManager::cacheSpecificColumn(string column_name,int number_segments  ) {
 	ColumnInfo* column;
 	bool found = false;
+	vector<pair<string,int>>columns_str; 
+	columns_str.push_back(make_pair("lo_orderdate",200)) ; 
+	columns_str.push_back(make_pair("lo_suppkey",200));
+	columns_str.push_back(make_pair("lo_partkey",200)) ; 
+	columns_str.push_back(make_pair("s_suppkey",1));
+    columns_str.push_back(make_pair("d_datekey",1));
+	columns_str.push_back(make_pair("p_partkey",2));
+	vector<pair<ColumnInfo*,int>>columns; 
+	for(int j = 0 ; j<columns_str.size() ; j++)
+	{
+	for (int i = 0; i < TOT_COLUMN; i++) {
+		if (allColumn[i]->column_name.compare(columns_str[j].first) == 0) {
+			columns.push_back(make_pair(allColumn[i],columns_str[j].second));	
+		}
+	}
+	}
+	if(number_segments)
+	{
+	   for(int i = 0 ; i<columns.size() ; i++)
+	   {
+		cacheColumnSegmentInGPU(columns[i].first, columns[i].second); 
+	   }  	
+		return 0 ; 
+	}
+	else 
+	{
 	for (int i = 0; i < TOT_COLUMN; i++) {
 		if (allColumn[i]->column_name.compare(column_name) == 0) {
 			column = allColumn[i];
@@ -1093,12 +1119,14 @@ CacheManager::cacheSpecificColumn(string column_name) {
 			break;
 		}
 	}
-
+   
 	if (!found) return -1;
-
+    
 	assert(column->tot_seg_in_GPU == 0);
-	cacheColumnSegmentInGPU(column, column->total_segment);
+	int cached_seg = number_segments == 0 ? column->total_segment : number_segments ;  
+	cacheColumnSegmentInGPU(column, cached_seg);
 	return 0;
+}
 }
 
 void

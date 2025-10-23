@@ -1,0 +1,150 @@
+Your Input: 1
+Input Query: 21
+
+query 21 with filter on d_dtekey 
+
+
+ Query: 21 19920101 19981231
+Query Prepare Time: 1.3056
+
+Query Optimization Time: 0.412672
+
+s_suppkey
+sg = 1
+h_total: 16122 output_estimate: 314572 sg: 1
+Filter Kernel time CPU: 0.35328
+Transfer size: 16122 sg: 1
+Transfer Time: 0.032992 sg: 1
+Build Kernel time GPU: 0.370688
+p_partkey
+sg = 3
+
+Filter Build Kernel time GPU: 0.172128
+d_datekey
+sg = 3
+
+Filter Build Kernel time GPU: 0.132096
+Build time 1.49709
+h_total: 1549 output_estimate: 4322230 sg: 14
+Probe Kernel time GPU: 5.89312
+Transfer size: 1549 sg: 14
+Transfer Time: 0.05744 sg: 14
+Group Kernel time CPU: 0.249856
+sg = 14 non demand time = 6.40614
+Probe time 6.47373
+Merge time 0.119168
+Result:
+Res count = 0
+Query Execution Time: 8.20547
+CPU Time: 0.35328
+GPU Time: 5.89312
+Transfer Time: 0.05744
+Malloc Time: 0.035904
+
+
+ Query: 21 19920101 19981231
+Query Prepare Time: 1.0296
+
+Query Optimization Time: 0.391008
+
+s_suppkey
+sg = 1
+h_total: 16122 output_estimate: 314572 sg: 1
+Filter Kernel time CPU: 0.285696
+Transfer size: 16122 sg: 1
+Transfer Time: 0.033792 sg: 1
+
+Build Kernel time GPU: 0.301056
+
+p_partkey
+sg = 3
+Filter Build Kernel time GPU: 0.159744
+d_datekey
+sg = 3
+Filter Build Kernel time GPU: 0.143392
+Build time 1.34957
+sg = 14
+h_total: 1549 output_estimate: 4322230 sg: 14
+Probe Kernel time GPU: 5.89926
+Transfer size: 1549 sg: 14
+Transfer Time: 0.057344 sg: 14
+Group Kernel time CPU: 0.201664
+sg = 14 non demand time = 6.36621
+Probe time 6.43174
+Merge time 0.091104
+Result:
+Res count = 0
+Query Execution Time: 7.99072
+CPU Time: 0.285696
+GPU Time: 5.89926
+Transfer Time: 0.057344
+Malloc Time: 0.031808
+
+
+Cumulated Time: 9.32118
+Execution time: 8.83907
+
+
+query 21 without filter on d_dtekey 
+
+Input Query: 21
+
+ Query: 21 19920101 19981231
+Query Prepare Time: 1.2104
+
+Query Optimization Time: 2.27533
+
+s_suppkey
+sg = 3
+Filter Build Kernel time GPU: 50.8989
+p_partkey
+sg = 3
+Filter Build Kernel time GPU: 0.173216
+d_datekey
+sg = 1
+Build Kernel time GPU: 0.090112
+Build time 51.4951
+Probe Group Kernel time GPU: 48.474
+sg = 15 non demand time = 48.5806
+Probe time 48.6584
+Merge time 0.142048
+Result:
+Res count = 0
+Query Execution Time: 100.419
+CPU Time: 0
+GPU Time: 51.0722
+Transfer Time: 0
+Malloc Time: 0.011488
+
+
+ Query: 21 19920101 19981231
+Query Prepare Time: 1.16973
+
+Query Optimization Time: 2.47603
+
+s_suppkey
+sg = 3
+Filter Build Kernel time GPU: 0.181248
+p_partkey
+sg = 3
+Filter Build Kernel time GPU: 0.15872
+d_datekey
+sg = 1
+Build Kernel time GPU: 0.129024
+Build time 0.888672
+sg = 15
+Probe Group Kernel time GPU: 6.94374
+sg = 15 non demand time = 7.05946
+Probe time 7.13098
+Merge time 0.170624
+Result:
+Res count = 0
+Query Execution Time: 8.32314
+CPU Time: 0
+GPU Time: 6.94374
+Transfer Time: 0
+Malloc Time: 0.021216
+
+
+Cumulated Time: 11.8684
+Execution time: 9.22176

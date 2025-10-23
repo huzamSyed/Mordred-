@@ -252,7 +252,7 @@ public:
 
 	void readSegmentMinMax();
 
-	int cacheSpecificColumn(string column_name);
+	int cacheSpecificColumn(string column_name,int specific_column = 0 );
 
 	int deleteSpecificColumnFromGPU(string column_name);
 

@@ -377,6 +377,10 @@ QueryOptimizer::parseQuery21() {
 
 	querySelectColumn.push_back(cm->p_category);
 	querySelectColumn.push_back(cm->s_region);
+ 
+
+
+
 	queryBuildColumn.push_back(cm->s_suppkey);
 	queryBuildColumn.push_back(cm->p_partkey);
 	queryBuildColumn.push_back(cm->d_datekey);
@@ -394,6 +398,9 @@ QueryOptimizer::parseQuery21() {
 
 	select_build[cm->s_suppkey].push_back(cm->s_region);
 	select_build[cm->p_partkey].push_back(cm->p_category);
+    //new begins 
+    select_build[cm->d_datekey].push_back(cm->d_datekey);
+	//new ends 
 
 	aggregation[cm->lo_orderdate].push_back(cm->lo_revenue);
 	groupby_build[cm->p_partkey].push_back(cm->p_brand1);
@@ -437,6 +444,13 @@ QueryOptimizer::parseQuery21() {
 	op->columns.push_back(cm->p_partkey);
 	op->supporting_columns.push_back(cm->lo_partkey);
 	opParsed[3].push_back(op);
+
+	
+	// ===== dates (table 4) — NEW FILTER BEFORE BUILD =====
+	op = new Operator(CPU, 0, 4, Filter);          // NEW
+	op->columns.push_back(cm->d_datekey);          // NEW (range on d_datekey)
+	opParsed[4].push_back(op);                     // NEW
+
 
 	op = new Operator(CPU, 0, 4, Build);
 	op->columns.push_back(cm->d_datekey);
@@ -1881,6 +1895,21 @@ QueryOptimizer::prepareQuery(int query, Distribution dist) {
 			params->real_selectivity[cm->lo_suppkey] = 0.2;
 			params->real_selectivity[cm->lo_orderdate] = 1;
 
+			
+			// new begins
+			// === NEW: build-side date range on d_datekey ===
+			params->mode[cm->d_datekey] = 2;              // 2 = RANGE (your convention)
+			params->compare1[cm->d_datekey] = 19940101;   // inclusive lower bound
+			params->compare2[cm->d_datekey] = 19940101;   // inclusive upper bound
+		
+			// Selectivity hint: ~1 year out of 1992–1998 (7 yrs)
+			params->real_selectivity[cm->d_datekey] = 1.0/7.0;
+			params->selectivity[cm->d_datekey]      = (1.0/7.0) * 1.5;
+			// new ends 
+			
+			
+			
+			
 			params->compare1[cm->s_region] = 1;
 			params->compare2[cm->s_region] = 1;
 			params->compare1[cm->p_category] = 1;
@@ -1908,13 +1937,26 @@ QueryOptimizer::prepareQuery(int query, Distribution dist) {
 			} else {
 				params->compare1[cm->lo_orderdate] = 19920101;
 				params->compare2[cm->lo_orderdate] = 19981231;
+				//new begins 
+				params->compare1[cm->d_datekey] = 19940101;
+				params->compare2[cm->d_datekey] = 19940101;
+				params->mode[cm->d_datekey] = 2;
+				//new ends 
 			}
 
 			CubDebugExit(cudaMemcpyFromSymbol(&(params->map_filter_func_dev[cm->s_region]), p_pred_eq<int, 128, 4>, sizeof(filter_func_t_dev<int, 128, 4>)));
 			CubDebugExit(cudaMemcpyFromSymbol(&(params->map_filter_func_dev[cm->p_category]), p_pred_eq<int, 128, 4>, sizeof(filter_func_t_dev<int, 128, 4>)));
-
+			CubDebugExit(cudaMemcpyFromSymbol(
+				&(params->map_filter_func_dev[cm->d_datekey]),
+				p_pred_between<int, 128, 4>, sizeof(filter_func_t_dev<int, 128, 4>)));
+		
 			params->map_filter_func_host[cm->s_region] = &host_pred_eq;
 			params->map_filter_func_host[cm->p_category] = &host_pred_eq;
+
+			// new begins 
+			params->map_filter_func_host[cm->d_datekey] = &host_pred_between;
+			//new ends 
+
 
 		} else if (query == 22) {
 			params->selectivity[cm->p_brand1] = 1.0/125 * 1.5;
@@ -1933,6 +1975,7 @@ QueryOptimizer::prepareQuery(int query, Distribution dist) {
 
 			params->compare1[cm->s_region] = 2;
 			params->compare2[cm->s_region] = 2;
+
 			params->compare1[cm->p_brand1] = 260;
 			params->compare2[cm->p_brand1] = 267;
 

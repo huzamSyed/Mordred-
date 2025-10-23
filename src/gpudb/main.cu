@@ -248,7 +248,7 @@ int main() {
 			srand(123);
 		} else if (input.compare("5") == 0) {
 			string filename;
-			cout << "File name: ";
+			cout << "File name:  ";
 			cin >> filename;
 			qp->dumpTrace("logs/"+filename);
 			cout << "Dumped Trace" << endl;
@@ -258,7 +258,10 @@ int main() {
 			do {
 				cout << "	Column to cache: ";
 				cin >> column_name;
-				ret = cgp->cm->cacheSpecificColumn(column_name);
+				int segments_to_cache ; 
+				cout<<" enter the number of segments to be cahced "<<endl; 
+				cin>> segments_to_cache ; 
+				ret = cgp->cm->cacheSpecificColumn(column_name,segments_to_cache);
 			} while (ret != 0);
 		} else if (input.compare("clear") == 0) {
 			cgp->cm->deleteAll();
