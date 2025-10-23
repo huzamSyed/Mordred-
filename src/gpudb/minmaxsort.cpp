@@ -1,12 +1,12 @@
 #include "ssb_utils.h"
+#include <assert.h>
+#include <fstream>
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <assert.h>
 
 using namespace std;
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   if (argc != 4) {
     cout << "col-name len SF" << endl;
     return 1;
@@ -23,27 +23,29 @@ int main(int argc, char** argv) {
   cout << "Loaded Column " << col_name << endl;
 
   ofstream myfile;
-  std::string fname = std::string{MOD_PATH} + "test/ssb/data/s" + sf + "_columnar/" + col_name + "minmax";
-  // std::cout << fname << std::endl;
-  myfile.open (fname);
+  std::string fname = std::string{DATA_DIR} + col_name + "minmax";
+  std::cout << fname << std::endl;
+  myfile.open(fname);
 
-  int total_segment = ((len + SEGMENT_SIZE - 1)/SEGMENT_SIZE);
+  int total_segment = ((len + SEGMENT_SIZE - 1) / SEGMENT_SIZE);
 
   cout << len << endl;
 
   for (int i = 0; i < total_segment; i++) {
-  	int adjusted_len = SEGMENT_SIZE;
-  	if (i == total_segment-1) {
-  		adjusted_len = len - SEGMENT_SIZE * i;
-  	}
+    int adjusted_len = SEGMENT_SIZE;
+    if (i == total_segment - 1) {
+      adjusted_len = len - SEGMENT_SIZE * i;
+    }
 
-    int min = raw[i*SEGMENT_SIZE];
-    int max = raw[i*SEGMENT_SIZE];
-  	for (int j = 0; j < adjusted_len; j++) {
-  		if (raw[i*SEGMENT_SIZE + j] > max) max = raw[i*SEGMENT_SIZE + j];
-  		if (raw[i*SEGMENT_SIZE + j] < min) min = raw[i*SEGMENT_SIZE + j];
-  	}
-  	myfile << min << " " << max << '\n';
+    int min = raw[i * SEGMENT_SIZE];
+    int max = raw[i * SEGMENT_SIZE];
+    for (int j = 0; j < adjusted_len; j++) {
+      if (raw[i * SEGMENT_SIZE + j] > max)
+        max = raw[i * SEGMENT_SIZE + j];
+      if (raw[i * SEGMENT_SIZE + j] < min)
+        min = raw[i * SEGMENT_SIZE + j];
+    }
+    myfile << min << " " << max << '\n';
   }
 
   myfile.close();
