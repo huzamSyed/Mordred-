@@ -62,16 +62,16 @@ CacheManager::CacheManager(size_t _cache_size, size_t _processing_size, size_t _
 
 	segment_bitmap = (char**) malloc (TOT_COLUMN * sizeof(char*));
 	segment_list = (int**) malloc (TOT_COLUMN * sizeof(int*));
-	segment_min = (int**) malloc (TOT_COLUMN * sizeof(int*));
-	segment_max = (int**) malloc (TOT_COLUMN * sizeof(int*));
+	segment_min = ( int**) malloc (TOT_COLUMN * sizeof(int*));
+	segment_max = ( int**) malloc (TOT_COLUMN * sizeof(int*));
 
 	for (int i = 0; i < TOT_COLUMN; i++) {
 		int n = allColumn[i]->total_segment;
 		segment_bitmap[i] = (char*) malloc(n * sizeof(char));
 		CubDebugExit(cudaHostAlloc((void**) &(segment_list[i]), n * sizeof(int), cudaHostAllocDefault));
 
-		segment_min[i] = (int*) malloc(n * sizeof(int));
-		segment_max[i] = (int*) malloc(n * sizeof(int));
+		segment_min[i] = ( int*) malloc(n * sizeof(int));
+		segment_max[i] = ( int*) malloc(n * sizeof(int));
 
 		memset(segment_bitmap[i], 0, n * sizeof(char));
 		memset(segment_list[i], -1, n * sizeof(int));
@@ -156,13 +156,15 @@ CacheManager::readSegmentMinMax() {
 				    start = end + del.size();
 				}
 				string maxstring = line.substr(start, end - start);
+				std::cout<<maxstring<<std::endl; 
 				segment_max[i][segment_idx] = stoi(maxstring);
 				segment_idx++;
 			}
+			printf(" the seg index is %d ",segment_idx);
 			assert(segment_idx == allColumn[i]->total_segment);
 			myfile.close();
 		} else {
-			cout << "Unable to open file" << endl; 
+			cout << "Unable to  open file" << endl; 
 			assert(0);
 		}
 
@@ -1081,9 +1083,35 @@ CacheManager::newEpoch(double param) {
 };
 
 int
-CacheManager::cacheSpecificColumn(string column_name) {
+CacheManager::cacheSpecificColumn(string column_name,int number_segments  ) {
 	ColumnInfo* column;
 	bool found = false;
+	vector<pair<string,int>>columns_str; 
+	columns_str.push_back(make_pair("lo_orderdate",200)) ; 
+	columns_str.push_back(make_pair("lo_suppkey",200));
+	columns_str.push_back(make_pair("lo_partkey",200)) ; 
+	columns_str.push_back(make_pair("s_suppkey",1));
+    columns_str.push_back(make_pair("d_datekey",1));
+	columns_str.push_back(make_pair("p_partkey",2));
+	vector<pair<ColumnInfo*,int>>columns; 
+	for(int j = 0 ; j<columns_str.size() ; j++)
+	{
+	for (int i = 0; i < TOT_COLUMN; i++) {
+		if (allColumn[i]->column_name.compare(columns_str[j].first) == 0) {
+			columns.push_back(make_pair(allColumn[i],columns_str[j].second));	
+		}
+	}
+	}
+	if(number_segments)
+	{
+	   for(int i = 0 ; i<columns.size() ; i++)
+	   {
+		cacheColumnSegmentInGPU(columns[i].first, columns[i].second); 
+	   }  	
+		return 0 ; 
+	}
+	else 
+	{
 	for (int i = 0; i < TOT_COLUMN; i++) {
 		if (allColumn[i]->column_name.compare(column_name) == 0) {
 			column = allColumn[i];
@@ -1091,12 +1119,14 @@ CacheManager::cacheSpecificColumn(string column_name) {
 			break;
 		}
 	}
-
+   
 	if (!found) return -1;
-
+    
 	assert(column->tot_seg_in_GPU == 0);
-	cacheColumnSegmentInGPU(column, column->total_segment);
+	int cached_seg = number_segments == 0 ? column->total_segment : number_segments ;  
+	cacheColumnSegmentInGPU(column, cached_seg);
 	return 0;
+}
 }
 
 void

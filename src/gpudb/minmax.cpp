@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 
   uint *raw = loadColumn<uint>(col_name, len);
 
-  cout << "Loaded Column " << col_name << endl;
+  cout << "Loaded Column   " << col_name << endl;
 
   ofstream myfile;
   std::string fname = std::string{MOD_PATH} + "test/ssb/data/s" + sf + "_columnar/" + col_name + "minmax";
@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
   		if (raw[i*SEGMENT_SIZE + j] > max) max = raw[i*SEGMENT_SIZE + j];
   		if (raw[i*SEGMENT_SIZE + j] < min) min = raw[i*SEGMENT_SIZE + j];
   	}
-  	myfile << min << " " << max << '\n';
+    myfile << min << ' ' << max << '\n';   // preferred
   }
 
   myfile.close();

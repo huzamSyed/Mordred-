@@ -8,7 +8,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
   if (argc != 4) {
-    cout << "col-name len SF" << endl;
+    cout << "col-name len  SF" << endl;
     return 1;
   }
 
@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 
   uint *raw = loadColumnSort<uint>(col_name, len);
 
-  cout << "Loaded Column " << col_name << endl;
+  cout << "Loaded Column  " << col_name << endl;
 
   ofstream myfile;
   std::string fname = std::string{MOD_PATH} + "test/ssb/data/s" + sf + "_columnar/" + col_name + "minmax";
@@ -43,7 +43,8 @@ int main(int argc, char** argv) {
   		if (raw[i*SEGMENT_SIZE + j] > max) max = raw[i*SEGMENT_SIZE + j];
   		if (raw[i*SEGMENT_SIZE + j] < min) min = raw[i*SEGMENT_SIZE + j];
   	}
-  	myfile << min << " " << max << '\n';
+    printf(" the min %d and the max %d \n",min,max);
+    myfile << min << ' ' << max << '\n';   // preferred
   }
 
   myfile.close();
