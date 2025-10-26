@@ -6,12 +6,17 @@ CUDA_BIN_PATH   ?= $(CUDA_PATH)/bin
 
 NVCC = $(CUDA_BIN_PATH)/nvcc
 
+#SM_TARGETS   = -gencode=arch=compute_52,code=\"sm_52,compute_52\" 
+# SM_DEF     = -DSM520
+
 SM_TARGETS   = -gencode=arch=compute_70,code=\"sm_70,compute_70\" 
 SM_DEF     = -DSM700
 
+#GENCODE_SM50    := -gencode arch=compute_52,code=sm_52
 GENCODE_SM70    := -gencode arch=compute_70,code=sm_70
 GENCODE_FLAGS   := $(GENCODE_SM70)
 
+#NVCCFLAGS += --std=c++11 $(SM_DEF) -Xptxas="-dlcm=cg -v" -lineinfo -Xcudafe -\# 
 NVCCFLAGS += --std=c++14 $(SM_DEF) -Xptxas="-dlcm=cg -v" -lineinfo -Xcudafe -\# 
 OPENMPFLAGS = -Xcompiler -fopenmp -lgomp
 
@@ -31,8 +36,12 @@ PREFLAGS += -DBASE_PATH=\"$(BASE_PATH)\" \
           -DS_LEN=$(S_LEN) \
           -DC_LEN=$(C_LEN) \
           -DD_LEN=$(D_LEN)
-LDFLAGS = -ltbb
 
+$(OBJ)/%.o: $(SRC)/%.cu
+	$(NVCC) -lcurand -lcuda $(SM_TARGETS) $(PREFLAGS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
+
+$(BIN)/%: $(OBJ)/%.o
+	$(NVCC) -ltbb -lcuda $(SM_TARGETS) $(PREFLAGS) -lcurand $^ -o $@
 
 $(OBJ)/%.o: $(SRC)/%.cpp
 	$(NVCC) -lcurand -lcuda $(SM_TARGETS) $(PREFLAGS) $(NVCCFLAGS) $(CPU_ARCH) $(INCLUDES) $(LIBS) -O3 -dc $< -o $@
