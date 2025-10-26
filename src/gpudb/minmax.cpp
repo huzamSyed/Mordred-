@@ -1,4 +1,4 @@
-#include "ssb_utils.h"
+#include "ssb_utils_cpu.h"
 #include <assert.h>
 #include <fstream>
 #include <iostream>

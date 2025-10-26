@@ -8,3 +8,6 @@ obj/
 test/ssb/data
 test/bench/data
 config.mk
+config.cmake
+build/
+.cache/
