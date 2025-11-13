@@ -104,7 +104,6 @@ class QueryParams{
 public:
 
   int query;
-  
   map<ColumnInfo*, int> min_key;
   map<ColumnInfo*, int> max_key;
   map<ColumnInfo*, int> min_val;
@@ -139,7 +138,7 @@ public:
     assert(_query == 11 || _query == 12 || _query == 13 ||
           _query == 21 || _query == 22 || _query == 23 ||
           _query == 31 || _query == 32 || _query == 33 || _query == 34 ||
-          _query == 41 || _query == 42 || _query == 43); 
+          _query == 41 || _query == 42 || _query == 43 || _query == 10); 
   };
 };
 

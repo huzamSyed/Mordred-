@@ -1087,12 +1087,13 @@ CacheManager::cacheSpecificColumn(string column_name,int number_segments  ) {
 	ColumnInfo* column;
 	bool found = false;
 	vector<pair<string,int>>columns_str; 
-	columns_str.push_back(make_pair("lo_orderdate",200)) ; 
-	columns_str.push_back(make_pair("lo_suppkey",200));
-	columns_str.push_back(make_pair("lo_partkey",200)) ; 
+	columns_str.push_back(make_pair("lo_orderdate",229)) ; 
+	columns_str.push_back(make_pair("lo_partkey",229));
+	columns_str.push_back(make_pair("lo_partkey",229)) ; 
 	columns_str.push_back(make_pair("s_suppkey",1));
     columns_str.push_back(make_pair("d_datekey",1));
 	columns_str.push_back(make_pair("p_partkey",2));
+	columns_str.push_back(make_pair("lo_extendedprice",229));
 	vector<pair<ColumnInfo*,int>>columns; 
 	for(int j = 0 ; j<columns_str.size() ; j++)
 	{

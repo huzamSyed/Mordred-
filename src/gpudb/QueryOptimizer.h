@@ -328,6 +328,7 @@ public:
 	void setDistributionNormal(double mean, double stddev);
 
 	void parseQuery(int query);
+	void parseQuery10() ; 
 	void parseQuery11();
 	void parseQuery12();
 	void parseQuery13();

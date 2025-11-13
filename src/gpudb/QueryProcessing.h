@@ -20,7 +20,6 @@ public:
   bool verbose;
   bool custom;
   bool skipping;
-
   double logical_time;
 
   Distribution dist;

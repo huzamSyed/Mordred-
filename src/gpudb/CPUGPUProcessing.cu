@@ -1004,7 +1004,7 @@ CPUGPUProcessing::call_pfilter_GPU(QueryParams* params, int** &off_col, int* &d_
   CubDebugExit(cudaMemsetAsync(d_total, 0, sizeof(int), stream));
 
   for (int i = 0; i < qo->selectGPUPipelineCol[sg].size(); i++) {
-    if (select_so_far == qo->select_probe[cm->lo_orderdate].size()) break;
+    // if (select_so_far == qo->select_probe[cm->lo_orderdate].size()) break;
     ColumnInfo* column = qo->selectGPUPipelineCol[sg][i];
     cm->indexTransfer(col_idx, column, stream, custom);
     cpu_to_gpu[sg] += (column->total_segment * sizeof(int));
@@ -1100,7 +1100,7 @@ CPUGPUProcessing::call_pfilter_GPU(QueryParams* params, int** &off_col, int* &d_
   CubDebugExit(cudaStreamSynchronize(stream));
   gpu_to_cpu[sg] += (1 * sizeof(int));
 
-  if (verbose) cout << "h_total: " << *h_total << " output_estimate: " << output_estimate << " sg: " << sg  << endl;
+  if (verbose) cout << "filter h_total: " << *h_total << " output_estimate: " << output_estimate << " sg: " << sg  << endl;
   assert(*h_total <= output_estimate);
   assert(*h_total > 0);
 
@@ -1128,7 +1128,7 @@ CPUGPUProcessing::call_pfilter_CPU(QueryParams* params, int** &h_off_col, int* h
   off_col_out = new int*[cm->TOT_TABLE](); //initialize to NULL
 
   for (int i = 0; i < qo->selectCPUPipelineCol[sg].size(); i++) {
-    if (select_so_far == qo->select_probe[cm->lo_orderdate].size()) break;
+   // if (select_so_far == qo->select_probe[cm->lo_orderdate].size()) break;
     ColumnInfo* column = qo->selectCPUPipelineCol[sg][i];
     filter_col[select_so_far + i] = column;
     _compare1[select_so_far + i] = params->compare1[column];

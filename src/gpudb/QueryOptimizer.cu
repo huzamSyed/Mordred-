@@ -105,6 +105,7 @@ void
 QueryOptimizer::parseQuery(int query) {
 
 	if (query == 11) parseQuery11();
+	else if(query == 10) parseQuery10() ; 
 	else if (query == 12) parseQuery12();
 	else if (query == 13) parseQuery13();
 	else if (query == 21) parseQuery21();
@@ -172,7 +173,55 @@ QueryOptimizer::clearParsing() {
 
 	opParsed.clear();
 }
+void QueryOptimizer::parseQuery10(){
+	queryColumn.resize(cm->TOT_TABLE);
+	queryColumn[0].push_back(cm->lo_extendedprice);
+	queryColumn[0].push_back(cm->lo_orderdate);
+	queryColumn[0].push_back(cm->lo_partkey);
+	queryColumn[4].push_back(cm->d_datekey);
+	queryColumn[3].push_back(cm->p_partkey);
 
+	querySelectColumn.push_back(cm->lo_extendedprice);
+
+	queryBuildColumn.push_back(cm->p_partkey);
+	queryBuildColumn.push_back(cm->d_datekey);
+	queryProbeColumn.push_back(cm->lo_partkey);
+	queryProbeColumn.push_back(cm->lo_orderdate);
+	
+	join.resize(2);
+	join[0] = pair<ColumnInfo*, ColumnInfo*> (cm->lo_partkey, cm->p_partkey);
+	join[1] = pair<ColumnInfo*, ColumnInfo*> (cm->lo_orderdate, cm->d_datekey);
+	
+
+    opParsed.resize(cm->TOT_TABLE);
+	Operator* op;
+	op = new Operator (CPU, 0, 0, Filter);
+	op->columns.push_back(cm->lo_extendedprice);
+	opParsed[0].push_back(op);
+	op = new Operator (CPU, 0, 0, Probe);
+	op->columns.push_back(cm->lo_partkey);
+	op->supporting_columns.push_back(cm->p_partkey);
+	opParsed[0].push_back(op);
+	op = new Operator (CPU, 0, 0, Probe);
+	op->columns.push_back(cm->lo_orderdate);
+	op->supporting_columns.push_back(cm->d_datekey);
+	opParsed[0].push_back(op);
+
+
+
+	op = new Operator (CPU, 0, 3, Build);
+	op->columns.push_back(cm->p_partkey);
+	op->supporting_columns.push_back(cm->lo_partkey);
+	opParsed[3].push_back(op);
+
+	
+
+
+	op = new Operator(CPU, 0, 4, Build);
+	op->columns.push_back(cm->d_datekey);
+	op->supporting_columns.push_back(cm->lo_orderdate);
+	opParsed[4].push_back(op);
+}
 void 
 QueryOptimizer::parseQuery11() {
 
@@ -1680,8 +1729,76 @@ void
 QueryOptimizer::prepareQuery(int query, Distribution dist) {
 
 	params = new QueryParams(query);
+if(query == 10)
+{
+	//params->selectivity[cm->s_region] = 0.2 * 1.5;
+	params->selectivity[cm->d_datekey] = 1.0;
+	//params->selectivity[cm->lo_suppkey] = 0.2 * 1.5;
+	params->selectivity[cm->lo_orderdate] = 1.0;
+	params->selectivity[cm->lo_partkey] = 1.0 ; 
+	params->selectivity[cm->lo_extendedprice] =0.5 ; 
+	params->compare1[cm->lo_extendedprice] =  100000;
+	params->compare2[cm->lo_extendedprice] =   10500000;
+	params->compare1[cm->lo_orderdate] = 19920101;
+	params->compare2[cm->lo_orderdate] = 19981231;
+	params->mode[cm->lo_extendedprice] = 1;
+	params->map_filter_func_host[cm->lo_extendedprice] = &host_pred_between;
+	//CubDebugExit(cudaMemcpyFromSymbol(&(params->d_group_func), p_sub_func<int>, sizeof(group_func_t<int>)));
+    CubDebugExit(cudaMemcpyFromSymbol(&(params->map_filter_func_dev[cm->lo_extendedprice]), p_pred_between<int, 128, 4>, sizeof(filter_func_t_dev<int, 128, 4>)));
 
-	if (query == 11 || query == 12 || query == 13) {
+	 params->unique_val[cm->p_partkey] = 7;
+	//params->unique_val[cm->c_custkey] = 0;
+	//params->unique_val[cm->s_suppkey] = 0;
+	params->unique_val[cm->d_datekey] = 1;
+
+	params->dim_len[cm->p_partkey] = P_LEN;
+	//params->dim_len[cm->c_custkey] = 0;
+	//params->dim_len[cm->s_suppkey] = S_LEN;
+	params->dim_len[cm->d_datekey] = 19981230 - 19920101 + 1;
+
+	params->total_val = ((1998-1992+1) * (5 * 5 * 40));
+
+	float time;
+	SETUP_TIMING();
+	cudaEventRecord(start, 0);
+
+	if (custom) {
+		params->ht_CPU[cm->p_partkey] = (int*) cm->customMalloc<int>(2 * params->dim_len[cm->p_partkey]);
+		params->ht_CPU[cm->c_custkey] = NULL;
+		params->ht_CPU[cm->s_suppkey] = (int*) cm->customMalloc<int>(2 * params->dim_len[cm->s_suppkey]);
+		params->ht_CPU[cm->d_datekey] = (int*) cm->customMalloc<int>(2 * params->dim_len[cm->d_datekey]);			
+	} else {
+		CubDebugExit(cudaHostAlloc((void**) &params->ht_CPU[cm->p_partkey], 2 * params->dim_len[cm->p_partkey] * sizeof(int), cudaHostAllocDefault));
+		//CubDebugExit(cudaHostAlloc((void**) &params->ht_CPU[cm->s_suppkey], 2 * params->dim_len[cm->s_suppkey] * sizeof(int), cudaHostAllocDefault));
+		CubDebugExit(cudaHostAlloc((void**) &params->ht_CPU[cm->d_datekey], 2 * params->dim_len[cm->d_datekey] * sizeof(int), cudaHostAllocDefault));	
+	}
+
+	if (custom) {
+		params->ht_GPU[cm->p_partkey] = (int*) cm->customCudaMalloc<int>(2 * params->dim_len[cm->p_partkey]);
+		params->ht_GPU[cm->s_suppkey] = (int*) cm->customCudaMalloc<int>(2 * params->dim_len[cm->s_suppkey]);
+		params->ht_GPU[cm->d_datekey] = (int*) cm->customCudaMalloc<int>(2 * params->dim_len[cm->d_datekey]);
+		params->ht_GPU[cm->c_custkey] = NULL;			
+	} else {
+		CubDebugExit(cudaMalloc((void**) &params->ht_GPU[cm->p_partkey], 2 * params->dim_len[cm->p_partkey] * sizeof(int)));
+		//CubDebugExit(cudaMalloc((void**) &params->ht_GPU[cm->s_suppkey], 2 * params->dim_len[cm->s_suppkey] * sizeof(int)));
+		CubDebugExit(cudaMalloc((void**) &params->ht_GPU[cm->d_datekey], 2 * params->dim_len[cm->d_datekey] * sizeof(int)));				
+	}
+
+	cudaEventRecord(stop, 0);
+  cudaEventSynchronize(stop);
+  cudaEventElapsedTime(&time, start, stop);
+  cgp->malloc_time_total += time;
+  // cout << "malloc time: " << cgp->malloc_time_total << endl;
+
+	memset(params->ht_CPU[cm->d_datekey], 0, 2 * params->dim_len[cm->d_datekey] * sizeof(int));
+	memset(params->ht_CPU[cm->p_partkey], 0, 2 * params->dim_len[cm->p_partkey] * sizeof(int));
+	//memset(params->ht_CPU[cm->s_suppkey], 0, 2 * params->dim_len[cm->s_suppkey] * sizeof(int));	
+
+	CubDebugExit(cudaMemset(params->ht_GPU[cm->p_partkey], 0, 2 * params->dim_len[cm->p_partkey] * sizeof(int)));
+//	CubDebugExit(cudaMemset(params->ht_GPU[cm->s_suppkey], 0, 2 * params->dim_len[cm->s_suppkey] * sizeof(int)));
+	CubDebugExit(cudaMemset(params->ht_GPU[cm->d_datekey], 0, 2 * params->dim_len[cm->d_datekey] * sizeof(int)));
+}
+	else if (query == 11 || query == 12 || query == 13) {
 
 		if (query == 11) {
 			params->selectivity[cm->d_year] = 1;
