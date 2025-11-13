@@ -1089,7 +1089,6 @@ CacheManager::cacheSpecificColumn(string column_name,int number_segments  ) {
 	vector<pair<string,int>>columns_str; 
 	columns_str.push_back(make_pair("lo_orderdate",229)) ; 
 	columns_str.push_back(make_pair("lo_partkey",229));
-	columns_str.push_back(make_pair("lo_partkey",229)) ; 
 	columns_str.push_back(make_pair("s_suppkey",1));
     columns_str.push_back(make_pair("d_datekey",1));
 	columns_str.push_back(make_pair("p_partkey",2));
