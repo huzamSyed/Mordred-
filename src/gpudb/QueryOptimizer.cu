@@ -1736,8 +1736,8 @@ if(query == 10)
 	//params->selectivity[cm->lo_suppkey] = 0.2 * 1.5;
 	params->selectivity[cm->lo_orderdate] = 1.0;
 	params->selectivity[cm->lo_partkey] = 1.0 ; 
-	params->selectivity[cm->lo_extendedprice] =0.5 ; 
-	params->compare1[cm->lo_extendedprice] =  100000;
+	params->selectivity[cm->lo_extendedprice] =1 ; 
+	params->compare1[cm->lo_extendedprice] =  lo_extended_price;
 	params->compare2[cm->lo_extendedprice] =   10500000;
 	params->compare1[cm->lo_orderdate] = 19920101;
 	params->compare2[cm->lo_orderdate] = 19981231;

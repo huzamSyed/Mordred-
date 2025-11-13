@@ -1,0 +1,73 @@
+10
+5500000
+
+ Query: 10 19920101 19981231
+Query Prepare Time: 0.48272
+
+Query Optimization Time: 0.458752
+
+p_partkey
+sg = 1
+Build Kernel time GPU: 0.047264
+d_datekey
+sg = 1
+Build Kernel time GPU: 0.016288
+Build time 0.206848
+h_total: 240012412 output_estimate: 240123904 sg: 7
+Filter Probe Kernel time GPU: 6.05594
+sg = 7 non demand time = 6.11328
+Probe time 6.14912
+Merge time 0.050496
+Result:
+Res count = 0
+Query Execution Time: 6.48019
+CPU Time: 0
+GPU Time: 6.05594
+Transfer Time: 0
+Malloc Time: 0.007808
+
+
+ Query: 10 19920101 19981231
+Query Prepare Time: 0.43024
+
+Query Optimization Time: 0.2992
+
+p_partkey
+sg = 1
+Build Kernel time GPU: 0.043008
+d_datekey
+sg = 1
+Build Kernel time GPU: 0.016384
+Build time 0.205824
+sg = 7
+filter h_total: 60390233 output_estimate: 240123904 sg: 7
+Filter Kernel time GPU: 1.66182
+h_total: 60390233 output_estimate: 60390232 sg: 7
+Probe Kernel time GPU: 5.62586
+sg = 7 non demand time = 7.39613
+Probe time 7.42803
+Merge time 0.043072
+Result:
+Res count = 0
+Query Execution Time: 7.75139
+CPU Time: 0
+GPU Time: 7.28768
+Transfer Time: 0
+Malloc Time: 0.00752
+
+
+Cumulated Time: 7.36739
+Execution time: 6.85814
+
+Select Options:
+1. Run Specific Query
+2. Run Random Queries
+3. Run Experiment
+4. Replacement
+5. Dump Trace
+6. Exit
+cache. Cache Specific Column
+clear. Delete Columns from GPU
+custom. Toggle custom malloc
+skipping. Toggle segment skipping
+Your Input: 

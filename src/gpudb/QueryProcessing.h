@@ -12,7 +12,7 @@ public:
   QueryOptimizer* qo;
   CPUGPUProcessing* cgp;
   QueryParams* params;
-
+  long long lo_extended_price ; 
   cudaStream_t streams[MAX_GROUPS];
 
   // map<int, int> query_freq;

@@ -315,10 +315,8 @@ QueryProcessing::executeTableFact_v2(int sg) {
     if (verbose) printf("sg = %d\n", sg);
     if(params->query == 10 )
     {
-      // cgp->call_pfilter_CPU(params, h_off_col, h_total, sg, 0) ; 
-      // printf(" the total tuple selected are %d\n",*h_total);
-      // cgp->switch_device_fact(off_col, h_off_col, d_total, h_total, sg, 0, 0, streams[sg]);
-      // cgp->call_probe_GPU(params, off_col, d_total, h_total, sg, streams[sg]);
+      cgp->call_pfilter_GPU(params, off_col, d_total, h_total, sg, 0, streams[sg]);     
+      cgp->call_probe_GPU(params, off_col, d_total, h_total, sg, streams[sg]);
     return ; 
   }
     if (qo->selectGPUPipelineCol[sg].size() > 0) {
@@ -907,7 +905,7 @@ QueryProcessing::processQuery() {
   float time;
 
   cudaEventRecord(start, 0);
-
+  qo->lo_extended_price = lo_extended_price ; 
   qo->parseQuery(query);
   qo->prepareQuery(query, dist);
   params = qo->params;
@@ -954,7 +952,7 @@ QueryProcessing::processQuery() {
   if (verbose) {
     cout << "Result:" << endl;
     int res_count = 0;
-    if(1)
+    if(0)
     for (int i=0; i< params->total_val; i++) {
       if (params->res[6*i+4] != 0) {
         cout << params->res[6*i] << " " << params->res[6*i+1] << " " << params->res[6*i+2] << " " << params->res[6*i+3] << " " << reinterpret_cast<unsigned long long*>(&params->res[6*i+4])[0]  << endl;
@@ -1036,7 +1034,7 @@ QueryProcessing::processQuery2() {
   if (verbose) {
     cout << "Result:" << endl;
     int res_count = 0;
-    if(1)
+    if(0)
     for (int i=0; i< params->total_val; i++) {
       if (params->res[6*i+4] != 0) {
         cout << params->res[6*i] << " " << params->res[6*i+1] << " " << params->res[6*i+2] << " " << params->res[6*i+3] << " " << reinterpret_cast<unsigned long long*>(&params->res[6*i+4])[0]  << endl;

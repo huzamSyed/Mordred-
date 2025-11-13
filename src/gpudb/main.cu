@@ -68,8 +68,9 @@ int main() {
 			cout << "Input Query: ";
 			cin >> query;
 			qp->setQuery(stoi(query));
-            long long extended_price_start  ;
-			cin>>extended_price_start ; 
+            long long lo_extended_price  ;
+			//cin>>lo_extended_price ; 
+			qp->lo_extended_price = lo_extended_price ; 
 			time1 = qp->processQuery();
 			malloc_time_total1 = cgp->malloc_time_total;
 			cpu_to_gpu1 = cgp->cpu_to_gpu_total;

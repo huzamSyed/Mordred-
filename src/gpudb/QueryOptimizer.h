@@ -272,7 +272,7 @@ public:
 	vector<ColumnInfo*> queryProbeColumn;
 	vector<ColumnInfo*> queryGroupByColumn;
 	vector<ColumnInfo*> queryAggrColumn;
-
+   long long lo_extended_price ; 
 	vector<vector<int>> index_to_sg;
 
 	vector<pair<ColumnInfo*, ColumnInfo*>> join;
