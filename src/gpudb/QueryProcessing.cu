@@ -897,18 +897,25 @@ QueryProcessing::profile() {
 
   }
 }
-
+#include<chrono>
+double current_time() {
+  using namespace std::chrono;
+  auto now = high_resolution_clock::now();
+  return duration<double>(now.time_since_epoch()).count();
+}
 double
 QueryProcessing::processQuery() {
 
   SETUP_TIMING();
   float time;
-
+  double s,e ; 
   cudaEventRecord(start, 0);
   qo->lo_extended_price = lo_extended_price ; 
+  s = current_time() ; 
   qo->parseQuery(query);
   qo->prepareQuery(query, dist);
   params = qo->params;
+  e = current_time() ; 
   cudaEventRecord(stop, 0);
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
@@ -916,6 +923,7 @@ QueryProcessing::processQuery() {
 
   if (verbose) {
     cout << "Query Prepare Time: " << time << endl;
+    cout<<" Query Prepare Time using cpu "<<e-s<<endl; 
     cout << endl;
   }
 
