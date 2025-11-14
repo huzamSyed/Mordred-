@@ -1,13 +1,13 @@
-SF=40
+SF=160
 
 # Make sure encoder is using right scale factor
 bin=bin/gpudb/minmax
 binsort=bin/gpudb/minmaxsort
 
-LO_LEN=240012412
-P_LEN=1200000
-S_LEN=80000
-C_LEN=1200000
+LO_LEN=960017453
+P_LEN=1600000
+S_LEN=320000
+C_LEN=4800000
 D_LEN=2556
 
 #define P_LEN 1200000

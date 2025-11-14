@@ -16,7 +16,7 @@ int main() {
 	srand(123);
 
 	size_t size = 52428800 * 40; //200 MB
-	size_t processing = 52428800 * 15; //400MB
+	size_t processing = 52428800 * 15*2; //400MB
 	size_t pinned = 52428800 * 20; //400MB
 	double alpha = 1.0;
 	bool custom = true;

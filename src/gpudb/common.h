@@ -26,7 +26,7 @@ using namespace cub;
 using namespace std;
 using namespace tbb;
 
-#define SF 40
+#define SF 160
 #define NUM_EVENTS 2
 
 #define BASE_PATH "/home/huzam/Mordred/test/ssb/data/"

@@ -12,7 +12,7 @@
 
 using namespace std;
 
-#define SF 40
+#define SF 160
 
 #define BASE_PATH "/home/huzam/Mordred/test/ssb/data/"
 

@@ -64,7 +64,7 @@ cd ssb/loader
 make sort
 ./columnSort ../data/s{SF}_columnar/LINEORDER ../data/s{SF}_columnar/LINEORDERSORT 5 16 {COLUMN_SIZE}
 ```
-./columnSort ../data/s40_columnar/LINEORDER ../data/s40_columnar/LINEORDERSORT 5 16 240012412
+./columnSort ../data/s40_columnar/LINEORDER ../data/s40_columnar/LINEORDERSORT 5 16 960017453
 * Configure the benchmark settings
 ```
 # Edit SF and BASE_PATH in src/gpudb/ssb_utils.h

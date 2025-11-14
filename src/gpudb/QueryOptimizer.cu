@@ -2296,8 +2296,8 @@ if(query == 10)
 			params->map_filter_func_host[cm->d_year] = &host_pred_between;
 
 		} else if (query == 32) {
-			params->selectivity[cm->c_nation] = 1.0/25 * 1.5;
-			params->selectivity[cm->s_nation] = 1.0/25 * 1.5;
+			params->selectivity[cm->c_nation] = 1;
+			params->selectivity[cm->s_nation] = 1;
 			params->selectivity[cm->d_year] = 1;
 			params->selectivity[cm->lo_custkey] = 1.0/25 * 1.5;
 			params->selectivity[cm->lo_suppkey] = 1.0/25 * 1.5;
