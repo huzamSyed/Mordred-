@@ -14,8 +14,8 @@ int main() {
 	bool verbose = 1;
 
 	srand(123);
-
-	size_t size = 52428800 * 40; //200 MB
+   int C = 4 ; 
+	size_t size = 52428800 * 5*C; //200 MB
 	size_t processing = 52428800 * 15*2; //400MB
 	size_t pinned = 52428800 * 20; //400MB
 	double alpha = 1.0;
@@ -180,7 +180,7 @@ int main() {
 
 
 			for (int iter = 0; iter < 20; iter++) {
-
+                cout<<" epoch start "<<endl;  
 				for (int i = 0; i < many_query; i++) {
 					qp->generate_rand_query();
 
@@ -193,16 +193,16 @@ int main() {
 					merging_time1 = cgp->merging_total;
 					cgp->resetTime();
 
-					time2 = qp->processQuery2();
-					malloc_time_total2 = cgp->malloc_time_total;
-					cpu_to_gpu2 = cgp->cpu_to_gpu_total;
-					gpu_to_cpu2 = cgp->gpu_to_cpu_total;
-					execution_time2 = cgp->execution_total;
-					optimization_time2 = cgp->optimization_total;
-					merging_time2 = cgp->merging_total;
-					cgp->resetTime();
+					// time2 = qp->processQuery2();
+					// malloc_time_total2 = cgp->malloc_time_total;
+					// cpu_to_gpu2 = cgp->cpu_to_gpu_total;
+					// gpu_to_cpu2 = cgp->gpu_to_cpu_total;
+					// execution_time2 = cgp->execution_total;
+					// optimization_time2 = cgp->optimization_total;
+					// merging_time2 = cgp->merging_total;
+					// cgp->resetTime();
 
-					if (time1 <= time2) {
+					if (1) {
 						time += time1; cpu_to_gpu += cpu_to_gpu1; gpu_to_cpu += gpu_to_cpu1; malloc_time_total += malloc_time_total1;
 						execution_time += execution_time1; optimization_time += optimization_time1; merging_time += merging_time1;
 					} else {
@@ -215,6 +215,7 @@ int main() {
 
 				cgp->cm->runReplacement(repl_policy, &repl_traffic);
 				qp->percentageData();
+				cout<<" epoch end"<<endl; 
 				if (repl_policy == Segmented || repl_policy == LFUSegmented) cgp->cm->newEpoch(0.5);
 				if (repl_policy == LRU2Segmented) cgp->cm->newEpoch(2.0);
 

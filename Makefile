@@ -95,8 +95,8 @@ NVCC            := nvcc
 #SM_TARGETS   = -gencode=arch=compute_52,code=\"sm_52,compute_52\"
 #SM_DEF       = -DSM520
 
-SM_TARGETS      = -gencode=arch=compute_70,code=\"sm_70,compute_70\"
-SM_DEF          = -DSM700
+SM_TARGETS      = -gencode=arch=compute_80,code=\"sm_80,compute_80\"
+SM_DEF          = -DSM800
 
 # =========================
 # Project layout
@@ -116,7 +116,7 @@ INCLUDES        := -I$(CUB_DIR) -I$(CUB_DIR)test -I. -I$(INC)
 # =========================
 DEBUG ?= 0
 
-NVCC_STD    := --std=c++14
+NVCC_STD    := --std=c++17
 HOST_WARN   := -Xcompiler -Wall -Xcompiler -Wextra
 FRAMEPTR    := -Xcompiler -fno-omit-frame-pointer
 
@@ -139,7 +139,7 @@ endif
 NVCCFLAGS   += $(NVCC_STD) $(SM_DEF) -Xptxas="-dlcm=cg -v" -lineinfo -Xcudafe -\# \
                $(HOST_WARN) $(NVCC_MODE)
 
-CFLAGS      := $(C_MODE) -march=native -std=c++14
+CFLAGS      := $(C_MODE) -march=native -std=c++17
 LDFLAGS     :=
 LIBS_COMMON := -ltbb
 LIBS_CUDA   := -lcuda -lcurand

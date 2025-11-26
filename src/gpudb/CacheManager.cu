@@ -475,7 +475,7 @@ CacheManager::SegmentReplacement() {
 		for (int j = 0; j < allColumn[i]->total_segment; j++) {
 			Segment* segment = index_to_segment[i][j];
 			access_weight_map.insert({segment->weight, segment});
-			cout << allColumn[i]->column_name << " " << j << " " << segment->weight << endl;
+		//	cout << allColumn[i]->column_name << " " << j << " " << segment->weight << endl;
 		}
 	}
 
@@ -487,8 +487,8 @@ CacheManager::SegmentReplacement() {
         if(temp_buffer_size + 1 < cache_total_seg && cit->first > 0){
             temp_buffer_size+=1;
             segments_to_place.insert(cit->second);
-            cout << "Should place ";
-            cout << cit->second->column->column_name << " segment " << cit->second->segment_id << endl;
+           // cout << "Should place ";
+            //cout << cit->second->column->column_name << " segment " << cit->second->segment_id << endl;
         }
     }
 
@@ -500,8 +500,8 @@ CacheManager::SegmentReplacement() {
     		Segment* segment = index_to_segment[i][j];
 				if (segments_to_place.find(segment) == segments_to_place.end()) {
 					if (segment_bitmap[i][j]) {
-						cout << "Deleting segment ";
-						cout << segment->column->column_name << " segment " << segment->segment_id << endl;
+						//cout << "Deleting segment ";
+						//cout << segment->column->column_name << " segment " << segment->segment_id << endl;
 						deleteSegmentInGPU(segment);
 					}
 				}
@@ -511,8 +511,8 @@ CacheManager::SegmentReplacement() {
     set<Segment*>::const_iterator cit2;
     for(cit2 = segments_to_place.cbegin();cit2 != segments_to_place.cend(); ++cit2){
     	if (segment_bitmap[(*cit2)->column->column_id][(*cit2)->segment_id] == 0) {
-				cout << "Caching segment ";
-				cout << (*cit2)->column->column_name << " " << (*cit2)->segment_id << endl;
+				//cout << "Caching segment ";
+				//cout << (*cit2)->column->column_name << " " << (*cit2)->segment_id << endl;
 				cacheSegmentInGPU(*cit2);
 				traffic += SEGMENT_SIZE * sizeof(int);
     	}

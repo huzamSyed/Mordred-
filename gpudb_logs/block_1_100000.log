@@ -1,63 +1,60 @@
 10
-100000
 
  Query: 10 19920101 19981231
-Query Prepare Time: 24.1083
+Query Prepare Time: 14.4613
+ Query Prepare Time using cpu 0.0144565
 
-Query Optimization Time: 0.151392
+Query Optimization Time: 1.61075
 
 p_partkey
 sg = 1
-Build Kernel time GPU: 3.49894
-d_datekey
+Build Kernel time GPU: 2.542368 Build Kernel time CPU: 2.889728 d_datekey
 sg = 1
-Build Kernel time GPU: 0.01616
-Build time 4.9879
-h_total: 240012412 output_estimate: 240123904 sg: 7
-Filter Probe Kernel time GPU: 6.0969
-sg = 7 non demand time = 6.14195
-Probe time 6.1625
-Merge time 0.178592
+Build Kernel time GPU: 0.015424 Build Kernel time CPU: 0.026752 Build time 6.63456
+sg = 0 non demand time = 0.002112
+h_total: 240123904 output_estimate: 240123904 sg: 7
+Filter Probe Kernel time GPU: 6.489088 sg = 7 non demand time = 6.59354
+Probe time 6.71437
+Merge time 0.023872
 Result:
 Res count = 0
-Query Execution Time: 11.3887
-CPU Time: 0
-GPU Time: 6.0969
+Query Execution Time: 13.439
+CPU Time: 2.91648
+GPU Time: 6.48909
 Transfer Time: 0
-Malloc Time: 0.0064
+Malloc Time: 0.005632
 
 
  Query: 10 19920101 19981231
-Query Prepare Time: 0.288256
+Query Prepare Time: 1.25773
 
-Query Optimization Time: 0.177152
+Query Optimization Time: 2.20467
 
 p_partkey
 sg = 1
-Build Kernel time GPU: 0.038784
-d_datekey
+Build Kernel time GPU: 0.053408 Build Kernel time CPU: 0.669696 d_datekey
 sg = 1
-Build Kernel time GPU: 0.012224
-Build time 0.133088
+Build Kernel time GPU: 0.018464 Build Kernel time CPU: 0.029696 Build time 0.900096
+sg = 0
+sg = 0 non demand time = 0.008192
 sg = 7
-filter h_total: 239891363 output_estimate: 240123904 sg: 7
-Filter Kernel time GPU: 2.7136
-h_total: 239891363 output_estimate: 239891360 sg: 7
-Probe Kernel time GPU: 16.7137
-sg = 7 non demand time = 19.5174
-Probe time 19.541
-Merge time 0.036928
+filter h_total: 240123904 output_estimate: 240123904 sg: 7
+100000
+Filter Kernel time GPU: 3.030080 h_total: 240123904 output_estimate: 240123904 sg: 7
+Probe Kernel time GPU: 20.497408 sg = 7 non demand time = 23.7332
+Probe time 23.9155
+Merge time 0.040608
 Result:
 Res count = 0
-Query Execution Time: 19.7694
-CPU Time: 0
-GPU Time: 19.4273
+Query Execution Time: 24.9331
+CPU Time: 0.699392
+GPU Time: 23.5275
 Transfer Time: 0
-Malloc Time: 0.00512
+Malloc Time: 0.006144
 
 
-Cumulated Time: 20.1939
-Execution time: 19.9798
+Cumulated Time: 28.3437
+Execution time: 26.0984
 
 Select Options:
 1. Run Specific Query
@@ -70,4 +67,4 @@ cache. Cache Specific Column
 clear. Delete Columns from GPU
 custom. Toggle custom malloc
 skipping. Toggle segment skipping
-Your Input: 
+Your Input: 
