@@ -5,7 +5,7 @@ from collections import defaultdict
 import matplotlib.pyplot as plt  # NEW
 import numpy as np               # NEW
 
-LOG_PATH = "run_1GB_1.log"
+LOG_PATH = "sf40_0GB"
 
 METRIC_NAMES = [
     "Query Prepare Time",
@@ -428,9 +428,11 @@ def main():
     total_epochs = len(epoch_stats)
     print(f"Parsed {total_epochs} epochs.")
     write_epoch_csvs(epoch_stats, epoch_fraction, LOG_PATH)
-    # existing per-epoch bars (optional)
-    # plot_epoch_metrics(epoch_stats)
-    # NEW: per-query plots across epochs
+
+    # Per-epoch bar charts (one PNG per epoch)
+    plot_epoch_metrics(epoch_stats)
+
+    # Per-query scatter plots across epochs
     plot_per_query_across_epochs(epoch_stats, epoch_fraction)
 
 
