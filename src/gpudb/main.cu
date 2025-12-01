@@ -14,10 +14,10 @@ int main() {
 	bool verbose = 1;
 
 	srand(123);
-   int C = 4 ; 
-	size_t size = 52428800 * 5*C; //200 MB
-	size_t processing = 52428800 * 15*2; //400MB
-	size_t pinned = 52428800 * 20; //400MB
+   int C = 1 ; 
+	size_t size = 52428800ULL * 5*C*0; //200 MB
+	size_t processing = 52428800ULL * 15*2; //400MB
+	size_t pinned = 52428800ULL * 5*C*2; //400MB
 	double alpha = 1.0;
 	bool custom = true;
 	bool skipping = true;
@@ -193,16 +193,16 @@ int main() {
 					merging_time1 = cgp->merging_total;
 					cgp->resetTime();
 
-					// time2 = qp->processQuery2();
-					// malloc_time_total2 = cgp->malloc_time_total;
-					// cpu_to_gpu2 = cgp->cpu_to_gpu_total;
-					// gpu_to_cpu2 = cgp->gpu_to_cpu_total;
-					// execution_time2 = cgp->execution_total;
-					// optimization_time2 = cgp->optimization_total;
-					// merging_time2 = cgp->merging_total;
-					// cgp->resetTime();
+					time2 = qp->processQuery2();
+					malloc_time_total2 = cgp->malloc_time_total;
+					cpu_to_gpu2 = cgp->cpu_to_gpu_total;
+					gpu_to_cpu2 = cgp->gpu_to_cpu_total;
+					execution_time2 = cgp->execution_total;
+					optimization_time2 = cgp->optimization_total;
+					merging_time2 = cgp->merging_total;
+					cgp->resetTime();
 
-					if (1) {
+					if (time1 <= time2) {
 						time += time1; cpu_to_gpu += cpu_to_gpu1; gpu_to_cpu += gpu_to_cpu1; malloc_time_total += malloc_time_total1;
 						execution_time += execution_time1; optimization_time += optimization_time1; merging_time += merging_time1;
 					} else {

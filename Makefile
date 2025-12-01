@@ -116,6 +116,17 @@ INCLUDES        := -I$(CUB_DIR) -I$(CUB_DIR)test -I. -I$(INC)
 # =========================
 DEBUG ?= 0
 
+# Use all cores by default for parallel builds (you can override by invoking make -jN)
+MAKEFLAGS += -j$(shell nproc)
+
+# Use ccache for nvcc when available (speeds repeated builds)
+CCACHE := $(shell which ccache 2>/dev/null)
+ifeq ($(CCACHE),)
+  NVCC := nvcc
+else
+  NVCC := $(CCACHE) nvcc
+endif
+
 NVCC_STD    := --std=c++17
 HOST_WARN   := -Xcompiler -Wall -Xcompiler -Wextra
 FRAMEPTR    := -Xcompiler -fno-omit-frame-pointer

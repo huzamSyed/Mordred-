@@ -447,9 +447,9 @@ QueryOptimizer::parseQuery21() {
 
 	select_build[cm->s_suppkey].push_back(cm->s_region);
 	select_build[cm->p_partkey].push_back(cm->p_category);
-    //new begins 
-    select_build[cm->d_datekey].push_back(cm->d_datekey);
-	//new ends 
+    // //new begins 
+    // select_build[cm->d_datekey].push_back(cm->d_datekey);
+	// //new ends 
 
 	aggregation[cm->lo_orderdate].push_back(cm->lo_revenue);
 	groupby_build[cm->p_partkey].push_back(cm->p_brand1);
@@ -495,10 +495,10 @@ QueryOptimizer::parseQuery21() {
 	opParsed[3].push_back(op);
 
 	
-	// ===== dates (table 4) — NEW FILTER BEFORE BUILD =====
-	op = new Operator(CPU, 0, 4, Filter);          // NEW
-	op->columns.push_back(cm->d_datekey);          // NEW (range on d_datekey)
-	opParsed[4].push_back(op);                     // NEW
+	// // ===== dates (table 4) — NEW FILTER BEFORE BUILD =====
+	// op = new Operator(CPU, 0, 4, Filter);          // NEW
+	// op->columns.push_back(cm->d_datekey);          // NEW (range on d_datekey)
+	// opParsed[4].push_back(op);                     // NEW
 
 
 	op = new Operator(CPU, 0, 4, Build);
@@ -2013,16 +2013,16 @@ if(query == 10)
 			params->real_selectivity[cm->lo_orderdate] = 1;
 
 			
-			// new begins
-			// === NEW: build-side date range on d_datekey ===
-			params->mode[cm->d_datekey] = 2;              // 2 = RANGE (your convention)
-			params->compare1[cm->d_datekey] = 19940101;   // inclusive lower bound
-			params->compare2[cm->d_datekey] = 19940101;   // inclusive upper bound
+			// // new begins
+			// // === NEW: build-side date range on d_datekey ===
+			// params->mode[cm->d_datekey] = 2;              // 2 = RANGE (your convention)
+			// params->compare1[cm->d_datekey] = 19940101;   // inclusive lower bound
+			// params->compare2[cm->d_datekey] = 19940101;   // inclusive upper bound
 		
-			// Selectivity hint: ~1 year out of 1992–1998 (7 yrs)
-			params->real_selectivity[cm->d_datekey] = 1.0/7.0;
-			params->selectivity[cm->d_datekey]      = (1.0/7.0) * 1.5;
-			// new ends 
+			// // Selectivity hint: ~1 year out of 1992–1998 (7 yrs)
+			// params->real_selectivity[cm->d_datekey] = 1.0/7.0;
+			// params->selectivity[cm->d_datekey]      = (1.0/7.0) * 1.5;
+			// // new ends 
 			
 			
 			
@@ -2055,9 +2055,9 @@ if(query == 10)
 				params->compare1[cm->lo_orderdate] = 19920101;
 				params->compare2[cm->lo_orderdate] = 19981231;
 				//new begins 
-				params->compare1[cm->d_datekey] = 19940101;
-				params->compare2[cm->d_datekey] = 19940101;
-				params->mode[cm->d_datekey] = 2;
+				// params->compare1[cm->d_datekey] = 19940101;
+				// params->compare2[cm->d_datekey] = 19940101;
+				// params->mode[cm->d_datekey] = 2;
 				//new ends 
 			}
 
@@ -2070,9 +2070,9 @@ if(query == 10)
 			params->map_filter_func_host[cm->s_region] = &host_pred_eq;
 			params->map_filter_func_host[cm->p_category] = &host_pred_eq;
 
-			// new begins 
-			params->map_filter_func_host[cm->d_datekey] = &host_pred_between;
-			//new ends 
+			// // new begins 
+			// params->map_filter_func_host[cm->d_datekey] = &host_pred_between;
+			// //new ends 
 
 
 		} else if (query == 22) {
