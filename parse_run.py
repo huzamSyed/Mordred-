@@ -5,7 +5,7 @@ from collections import defaultdict
 import matplotlib.pyplot as plt  # NEW
 import numpy as np               # NEW
 
-LOG_PATH = "sf40_0GB"
+LOG_PATH = "building.log"
 
 METRIC_NAMES = [
     "Query Prepare Time",

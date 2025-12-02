@@ -768,7 +768,7 @@ CPUGPUProcessing::call_probe_GPU(QueryParams* params, int** &off_col, int* &d_to
   cudaEventRecord(start, 0);
 
   if (off_col == NULL) {
-    output_estimate = SEGMENT_SIZE * qo->segment_group_count[0][sg] * output_selectivity;
+    output_estimate = SEGMENT_SIZE * qo->segment_group_count[0][sg] ;
     for (int i = 0; i < cm->TOT_TABLE; i++) {
       if (i == 0 || qo->joinGPUcheck[i]) {
         if (!custom) CubDebugExit(cudaMalloc((void**) &off_col_out[i], output_estimate * sizeof(int)));
@@ -777,7 +777,7 @@ CPUGPUProcessing::call_probe_GPU(QueryParams* params, int** &off_col, int* &d_to
     }
   } else {
     assert(*h_total > 0);
-    output_estimate = *h_total * output_selectivity;
+    output_estimate = *h_total ;
     for (int i = 0; i < cm->TOT_TABLE; i++) {
       if (off_col[i] != NULL || i == 0 || qo->joinGPUcheck[i]) {
         if (!custom) CubDebugExit(cudaMalloc((void**) &off_col_out[i], output_estimate * sizeof(int)));
@@ -1635,7 +1635,7 @@ CPUGPUProcessing::call_bfilter_CPU(QueryParams* params, int* &h_off_col, int* h_
   ColumnInfo* column = qo->select_build[temp][0];
   int* filter_col = column->col_ptr;
 
-  int output_estimate = qo->segment_group_count[table][sg] * SEGMENT_SIZE * params->selectivity[column];
+  int output_estimate = qo->segment_group_count[table][sg] * SEGMENT_SIZE ;
 
   SETUP_TIMING();
   float time;

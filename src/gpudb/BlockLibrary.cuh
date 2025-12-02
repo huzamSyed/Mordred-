@@ -1,6 +1,17 @@
 #ifndef _BLOCK_LIBRARY_H_
 #define _BLOCK_LIBRARY_H_
 
+#define HASH(key, ht_len, keys_min)                                         \
+  ({                                                                        \
+    uint32_t _k = (uint32_t)((key) - (keys_min));                           \
+    _k ^= _k >> 16;                                                         \
+    _k *= 0x85ebca6bU;                                                      \
+    _k ^= _k >> 13;                                                         \
+    _k *= 0xc2b2ae35U;                                                      \
+    _k ^= _k >> 16;                                                         \
+    (int)(_k % (uint32_t)(ht_len));                                         \
+  })
+
 #pragma once
 
 #define cudaAssert( X ) if ( !(X) ) { printf( "Thread %d:%d failed assert at %s:%d!\n", blockIdx.x, threadIdx.x, __FILE__, __LINE__ ); return; }

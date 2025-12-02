@@ -422,7 +422,7 @@ QueryOptimizer::parseQuery21() {
 	queryColumn[3].push_back(cm->p_category);
 	queryColumn[3].push_back(cm->p_brand1);
 	queryColumn[4].push_back(cm->d_datekey);
-	queryColumn[4].push_back(cm->d_year);
+
 
 	querySelectColumn.push_back(cm->p_category);
 	querySelectColumn.push_back(cm->s_region);
@@ -436,7 +436,6 @@ QueryOptimizer::parseQuery21() {
 	queryProbeColumn.push_back(cm->lo_suppkey);
 	queryProbeColumn.push_back(cm->lo_partkey);
 	queryProbeColumn.push_back(cm->lo_orderdate);
-	queryGroupByColumn.push_back(cm->d_year);
 	queryGroupByColumn.push_back(cm->p_brand1);
 	queryAggrColumn.push_back(cm->lo_revenue);
 
@@ -445,15 +444,14 @@ QueryOptimizer::parseQuery21() {
 	join[1] = pair<ColumnInfo*, ColumnInfo*> (cm->lo_partkey, cm->p_partkey);
 	join[2] = pair<ColumnInfo*, ColumnInfo*> (cm->lo_orderdate, cm->d_datekey);
 
-	select_build[cm->s_suppkey].push_back(cm->s_region);
-	select_build[cm->p_partkey].push_back(cm->p_category);
+	// select_build[cm->s_suppkey].push_back(cm->s_region);
+	// select_build[cm->p_partkey].push_back(cm->p_category);
     // //new begins 
     // select_build[cm->d_datekey].push_back(cm->d_datekey);
 	// //new ends 
 
 	aggregation[cm->lo_orderdate].push_back(cm->lo_revenue);
 	groupby_build[cm->p_partkey].push_back(cm->p_brand1);
-	groupby_build[cm->d_datekey].push_back(cm->d_year);
 
 	// dataDrivenOperatorPlacement();
 
@@ -1998,12 +1996,12 @@ if(query == 10)
 	} else if (query == 21 || query == 22 || query == 23) {
 
 		if (query == 21) {
-			params->selectivity[cm->p_category] = 1.0/25 * 1.5;
-			params->selectivity[cm->s_region] = 0.2 * 1.5;
-			params->selectivity[cm->d_year] = 1;
-			params->selectivity[cm->lo_partkey] = 1.0/25 * 1.5;
-			params->selectivity[cm->lo_suppkey] = 0.2 * 1.5;
-			params->selectivity[cm->lo_orderdate] = 1;
+			params->selectivity[cm->p_category] =  1.0;
+			params->selectivity[cm->s_region] = 1.0;
+			params->selectivity[cm->d_year] = 1.0;
+			params->selectivity[cm->lo_partkey] = 1.0;
+			params->selectivity[cm->lo_suppkey] = 1.0;
+			params->selectivity[cm->lo_orderdate] = 1.0;
 
 			params->real_selectivity[cm->p_category] = 1.0/25;
 			params->real_selectivity[cm->s_region] = 0.2;
@@ -2027,13 +2025,13 @@ if(query == 10)
 			
 			
 			
-			params->compare1[cm->s_region] = 1;
-			params->compare2[cm->s_region] = 1;
-			params->compare1[cm->p_category] = 1;
-			params->compare2[cm->p_category] = 1;
+			// params->compare1[cm->s_region] = 1;
+			// params->compare2[cm->s_region] = 1;
+			// params->compare1[cm->p_category] = 1;
+			// params->compare2[cm->p_category] = 1;
 
-			params->mode[cm->s_region] = 1;
-			params->mode[cm->p_category] = 1;
+			// params->mode[cm->s_region] = 1;
+			// params->mode[cm->p_category] = 1;
 
 			if (dist == Zipf) {
 				zipfian[query]->generateZipf();
@@ -2052,7 +2050,7 @@ if(query == 10)
 				params->real_selectivity[cm->d_year] = (normal[query]->year.second - normal[query]->year.first + 1.0)/8;
 				params->mode[cm->d_year] = 1; //TODO: THERE IS NO FILTER NODE ON THE QUERY PLAN
 			} else {
-				params->compare1[cm->lo_orderdate] = 19920101;
+				params->compare1[cm->lo_orderdate] = 1;
 				params->compare2[cm->lo_orderdate] = 19981231;
 				//new begins 
 				// params->compare1[cm->d_datekey] = 19940101;
@@ -2116,7 +2114,7 @@ if(query == 10)
 				params->real_selectivity[cm->d_year] = (normal[query]->year.second - normal[query]->year.first + 1.0)/8;		
 				params->mode[cm->d_year] = 1;	//TODO: THERE IS NO FILTER NODE ON THE QUERY PLAN	
 			} else {
-				params->compare1[cm->lo_orderdate] = 19920101;
+				params->compare1[cm->lo_orderdate] = 1;
 				params->compare2[cm->lo_orderdate] = 19981231;
 			}
 
@@ -2166,7 +2164,7 @@ if(query == 10)
 				params->real_selectivity[cm->d_year] = (normal[query]->year.second - normal[query]->year.first + 1.0)/8;
 				params->mode[cm->d_year] = 1;	//TODO: THERE IS NO FILTER NODE ON THE QUERY PLAN
 			} else {
-				params->compare1[cm->lo_orderdate] = 19920101;
+				params->compare1[cm->lo_orderdate] = 1;
 				params->compare2[cm->lo_orderdate] = 19981231;
 			}
 
@@ -2180,17 +2178,17 @@ if(query == 10)
 		CubDebugExit(cudaMemcpyFromSymbol(&(params->d_group_func), p_sub_func<int>, sizeof(group_func_t<int>)));
 		params->h_group_func = &host_sub_func;
 
-		params->unique_val[cm->p_partkey] = 7;
-		params->unique_val[cm->c_custkey] = 0;
+		params->unique_val[cm->p_partkey] = P_LEN;
+		params->unique_val[cm->c_custkey] = C_LEN;
 		params->unique_val[cm->s_suppkey] = 0;
-		params->unique_val[cm->d_datekey] = 1;
+		params->unique_val[cm->d_datekey] = D_LEN;
 
 		params->dim_len[cm->p_partkey] = P_LEN;
-		params->dim_len[cm->c_custkey] = 0;
+		params->dim_len[cm->c_custkey] = C_LEN;
 		params->dim_len[cm->s_suppkey] = S_LEN;
-		params->dim_len[cm->d_datekey] = 19981230 - 19920101 + 1;
+		params->dim_len[cm->d_datekey] = D_LEN;
 
-		params->total_val = ((1998-1992+1) * (5 * 5 * 40));
+		params->total_val = ((1998) * (5 * 5 * 40));
 
 		float time;
 		SETUP_TIMING();

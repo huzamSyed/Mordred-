@@ -183,8 +183,8 @@ CacheManager::customMalloc(int size) {
 template <typename T>
 T*
 CacheManager::customCudaMalloc(int size) {
-	int alloc = ((size * sizeof(T)) + sizeof(uint64_t) - 1)/ sizeof(uint64_t);
-	int start = __atomic_fetch_add(&gpuPointer, alloc, __ATOMIC_RELAXED);
+	size_t alloc = ((size * sizeof(T)) + sizeof(uint64_t) - 1)/ sizeof(uint64_t);
+	size_t start = __atomic_fetch_add(&gpuPointer, alloc, __ATOMIC_RELAXED);
 	assert((start + alloc) < processing_size);
 	return reinterpret_cast<T*>(gpuProcessing + start);
 };
@@ -192,8 +192,8 @@ CacheManager::customCudaMalloc(int size) {
 template <typename T>
 T*
 CacheManager::customCudaHostAlloc(int size) {
-	int alloc = ((size * sizeof(T)) + sizeof(uint64_t) - 1)/ sizeof(uint64_t);
-	int start = __atomic_fetch_add(&pinnedPointer, alloc, __ATOMIC_RELAXED);
+	size_t alloc = ((size * sizeof(T)) + sizeof(uint64_t) - 1)/ sizeof(uint64_t);
+	size_t start = __atomic_fetch_add(&pinnedPointer, alloc, __ATOMIC_RELAXED);
 	assert((start + alloc) < processing_size);
 	return reinterpret_cast<T*>(pinnedMemory + start);
 };
@@ -1087,12 +1087,15 @@ CacheManager::cacheSpecificColumn(string column_name,int number_segments  ) {
 	ColumnInfo* column;
 	bool found = false;
 	vector<pair<string,int>>columns_str; 
-	columns_str.push_back(make_pair("lo_orderdate",229)) ; 
-	columns_str.push_back(make_pair("lo_partkey",229));
+	columns_str.push_back(make_pair("lo_orderdate",916)); ; 
+	columns_str.push_back(make_pair("lo_partkey",916));
+	columns_str.push_back(make_pair("lo_suppkey",916));
+	columns_str.push_back(make_pair("lo_revenue",916));
+	columns_str.push_back(make_pair("p_brand1",153));
 	columns_str.push_back(make_pair("s_suppkey",1));
-    columns_str.push_back(make_pair("d_datekey",1));
-	columns_str.push_back(make_pair("p_partkey",2));
-	columns_str.push_back(make_pair("lo_extendedprice",229));
+    columns_str.push_back(make_pair("d_datekey",244));
+	columns_str.push_back(make_pair("p_partkey",153));
+	//columns_str.push_back(make_pair("lo_extendedprice",229));
 	vector<pair<ColumnInfo*,int>>columns; 
 	for(int j = 0 ; j<columns_str.size() ; j++)
 	{

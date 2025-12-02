@@ -4,7 +4,13 @@
 #include "CacheManager.h"
 #include "CPUProcessing.h"
 #include "CostModel.h"
-
+#include <sys/time.h>
+double current_time_1() {
+    struct timeval tv;
+    gettimeofday(&tv, nullptr);
+    return static_cast<double>(tv.tv_sec) * 1000.0 +
+           static_cast<double>(tv.tv_usec) / 1000.0;
+}
 int main() {
 
 	cudaSetDevice(0);
@@ -14,10 +20,10 @@ int main() {
 	bool verbose = 1;
 
 	srand(123);
-   int C = 1 ; 
-	size_t size = 52428800ULL * 5*C*0; //200 MB
-	size_t processing = 52428800ULL * 15*2; //400MB
-	size_t pinned = 52428800ULL * 5*C*2; //400MB
+   int C = 20 ; 
+	size_t size = 52428800ULL * 5*C; //200 MB
+	size_t processing = 52428800ULL * 15*4; //400MB
+	size_t pinned = 52428800ULL * 5*C*8; //400MB
 	double alpha = 1.0;
 	bool custom = true;
 	bool skipping = true;
@@ -193,16 +199,16 @@ int main() {
 					merging_time1 = cgp->merging_total;
 					cgp->resetTime();
 
-					time2 = qp->processQuery2();
-					malloc_time_total2 = cgp->malloc_time_total;
-					cpu_to_gpu2 = cgp->cpu_to_gpu_total;
-					gpu_to_cpu2 = cgp->gpu_to_cpu_total;
-					execution_time2 = cgp->execution_total;
-					optimization_time2 = cgp->optimization_total;
-					merging_time2 = cgp->merging_total;
-					cgp->resetTime();
+					// time2 = qp->processQuery2();
+					// malloc_time_total2 = cgp->malloc_time_total;
+					// cpu_to_gpu2 = cgp->cpu_to_gpu_total;
+					// gpu_to_cpu2 = cgp->gpu_to_cpu_total;
+					// execution_time2 = cgp->execution_total;
+					// optimization_time2 = cgp->optimization_total;
+					// merging_time2 = cgp->merging_total;
+					// cgp->resetTime();
 
-					if (time1 <= time2) {
+					if (1) {
 						time += time1; cpu_to_gpu += cpu_to_gpu1; gpu_to_cpu += gpu_to_cpu1; malloc_time_total += malloc_time_total1;
 						execution_time += execution_time1; optimization_time += optimization_time1; merging_time += merging_time1;
 					} else {
@@ -264,7 +270,10 @@ int main() {
 				int segments_to_cache ; 
 				cout<<" enter the number of segments to be cahced "<<endl; 
 				cin>> segments_to_cache ; 
+				double s = current_time_1() ; 
 				ret = cgp->cm->cacheSpecificColumn(column_name,segments_to_cache);
+				double e = current_time_1() ; 
+				cout<<" Time to cache the column  "<< column_name <<" is  "<< (e -s) << " seconds "<<endl;
 			} while (ret != 0);
 		} else if (input.compare("clear") == 0) {
 			cgp->cm->deleteAll();

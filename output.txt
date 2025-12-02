@@ -3,34 +3,34 @@
 ===========================
 
 Segment size: 1048576
-Cache size: 2000
-Data size: 2084
-Cached data: 1164
+Cache size: 4000
+Data size: 10196
+Cached data: 3299
 
-lo_suppkey: 229/229 segments cached
-lo_custkey: 229/229 segments cached
-lo_partkey: 229/229 segments cached
-lo_orderdate: 229/229 segments cached
-lo_revenue: 229/229 segments cached
-lo_discount: 0/229 segments cached
-lo_quantity: 0/229 segments cached
-lo_extendedprice: 0/229 segments cached
-lo_supplycost: 0/229 segments cached
-c_custkey: 2/2 segments cached
-c_nation: 2/2 segments cached
-c_region: 0/2 segments cached
-c_city: 2/2 segments cached
+lo_suppkey: 916/916 segments cached
+lo_custkey: 0/916 segments cached
+lo_partkey: 916/916 segments cached
+lo_orderdate: 916/916 segments cached
+lo_revenue: 0/916 segments cached
+lo_discount: 0/916 segments cached
+lo_quantity: 0/916 segments cached
+lo_extendedprice: 0/916 segments cached
+lo_supplycost: 0/916 segments cached
+c_custkey: 0/151 segments cached
+c_nation: 0/151 segments cached
+c_region: 0/151 segments cached
+c_city: 0/151 segments cached
 s_suppkey: 1/1 segments cached
-s_nation: 1/1 segments cached
-s_region: 1/1 segments cached
-s_city: 1/1 segments cached
-p_partkey: 2/2 segments cached
-p_brand1: 2/2 segments cached
-p_category: 2/2 segments cached
-p_mfgr: 0/2 segments cached
-d_datekey: 1/1 segments cached
-d_year: 1/1 segments cached
-d_yearmonthnum: 1/1 segments cached
+s_nation: 0/1 segments cached
+s_region: 0/1 segments cached
+s_city: 0/1 segments cached
+p_partkey: 153/153 segments cached
+p_brand1: 153/153 segments cached
+p_category: 0/153 segments cached
+p_mfgr: 0/153 segments cached
+d_datekey: 244/244 segments cached
+d_year: 0/244 segments cached
+d_yearmonthnum: 0/244 segments cached
 
 
 
@@ -38,51 +38,51 @@ d_yearmonthnum: 1/1 segments cached
 ========  QUERY 11 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 182
-Segment cached and touched: 38
+Segment cached: 3299
+Segment touched: 707
+Segment cached and touched: 142
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 36
-Segment cached and touched: 36
+Segment cached: 916
+Segment touched: 141
+Segment cached and touched: 141
 
 
 lo_discount
 Speedup: 0.000
 Segment cached: 0
-Segment touched: 72
+Segment touched: 282
 Segment cached and touched: 0
 
 
 lo_quantity
 Speedup: 0.000
 Segment cached: 0
-Segment touched: 36
+Segment touched: 141
 Segment cached and touched: 0
 
 
 lo_extendedprice
 Speedup: 0.000
 Segment cached: 0
-Segment touched: 36
+Segment touched: 141
 Segment cached and touched: 0
 
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 244
 Segment touched: 1
 Segment cached and touched: 1
 
 
 d_year
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 
@@ -91,14 +91,67 @@ Segment cached and touched: 1
 ========  QUERY 12 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 22
-Segment cached and touched: 6
+Segment cached: 3299
+Segment touched: 67
+Segment cached and touched: 14
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
+Segment cached: 916
+Segment touched: 13
+Segment cached and touched: 13
+
+
+lo_discount
+Speedup: 0.000
+Segment cached: 0
+Segment touched: 26
+Segment cached and touched: 0
+
+
+lo_quantity
+Speedup: 0.000
+Segment cached: 0
+Segment touched: 13
+Segment cached and touched: 0
+
+
+lo_extendedprice
+Speedup: 0.000
+Segment cached: 0
+Segment touched: 13
+Segment cached and touched: 0
+
+
+d_datekey
+Speedup: 0.000
+Segment cached: 244
+Segment touched: 1
+Segment cached and touched: 1
+
+
+d_yearmonthnum
+Speedup: 0.000
+Segment cached: 0
+Segment touched: 1
+Segment cached and touched: 0
+
+
+
+
+===========================
+========  QUERY 13 ========
+===========================
+
+Segment cached: 3299
+Segment touched: 21
+Segment cached and touched: 5
+
+
+lo_orderdate
+Speedup: 0.000
+Segment cached: 916
 Segment touched: 4
 Segment cached and touched: 4
 
@@ -126,60 +179,7 @@ Segment cached and touched: 0
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
-Segment touched: 1
-Segment cached and touched: 1
-
-
-d_yearmonthnum
-Speedup: 0.000
-Segment cached: 1
-Segment touched: 1
-Segment cached and touched: 1
-
-
-
-
-===========================
-========  QUERY 13 ========
-===========================
-
-Segment cached: 1164
-Segment touched: 11
-Segment cached and touched: 3
-
-
-lo_orderdate
-Speedup: 0.000
-Segment cached: 229
-Segment touched: 2
-Segment cached and touched: 2
-
-
-lo_discount
-Speedup: 0.000
-Segment cached: 0
-Segment touched: 4
-Segment cached and touched: 0
-
-
-lo_quantity
-Speedup: 0.000
-Segment cached: 0
-Segment touched: 2
-Segment cached and touched: 0
-
-
-lo_extendedprice
-Speedup: 0.000
-Segment cached: 0
-Segment touched: 2
-Segment cached and touched: 0
-
-
-d_datekey
-Speedup: 0.000
-Segment cached: 1
+Segment cached: 244
 Segment touched: 1
 Segment cached and touched: 1
 
@@ -190,37 +190,37 @@ Segment cached and touched: 1
 ========  QUERY 21 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 926
-Segment cached and touched: 926
+Segment cached: 3299
+Segment touched: 4369
+Segment cached and touched: 3299
 
 
 lo_suppkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_partkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_revenue
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 0
+Segment touched: 916
+Segment cached and touched: 0
 
 
 s_suppkey
@@ -232,44 +232,37 @@ Segment cached and touched: 1
 
 s_region
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 p_partkey
 Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached: 153
+Segment touched: 153
+Segment cached and touched: 153
 
 
 p_brand1
 Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached: 153
+Segment touched: 153
+Segment cached and touched: 153
 
 
 p_category
 Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached: 0
+Segment touched: 153
+Segment cached and touched: 0
 
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
-Segment touched: 1
-Segment cached and touched: 1
-
-
-d_year
-Speedup: 0.000
-Segment cached: 1
-Segment touched: 1
-Segment cached and touched: 1
+Segment cached: 244
+Segment touched: 244
+Segment cached and touched: 244
 
 
 
@@ -278,37 +271,37 @@ Segment cached and touched: 1
 ========  QUERY 22 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 924
-Segment cached and touched: 924
+Segment cached: 3299
+Segment touched: 4154
+Segment cached and touched: 2993
 
 
 lo_suppkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_partkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_revenue
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 0
+Segment touched: 916
+Segment cached and touched: 0
 
 
 s_suppkey
@@ -320,37 +313,23 @@ Segment cached and touched: 1
 
 s_region
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
-
-
-p_partkey
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-p_brand1
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached and touched: 0
 
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
-Segment touched: 1
-Segment cached and touched: 1
+Segment cached: 244
+Segment touched: 244
+Segment cached and touched: 244
 
 
 d_year
 Speedup: 0.000
-Segment cached: 1
-Segment touched: 1
-Segment cached and touched: 1
+Segment cached: 0
+Segment touched: 244
+Segment cached and touched: 0
 
 
 
@@ -359,37 +338,37 @@ Segment cached and touched: 1
 ========  QUERY 23 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 924
-Segment cached and touched: 924
+Segment cached: 3299
+Segment touched: 4154
+Segment cached and touched: 2993
 
 
 lo_suppkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_partkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_revenue
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 0
+Segment touched: 916
+Segment cached and touched: 0
 
 
 s_suppkey
@@ -401,37 +380,23 @@ Segment cached and touched: 1
 
 s_region
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
-
-
-p_partkey
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-p_brand1
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached and touched: 0
 
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
-Segment touched: 1
-Segment cached and touched: 1
+Segment cached: 244
+Segment touched: 244
+Segment cached and touched: 244
 
 
 d_year
 Speedup: 0.000
-Segment cached: 1
-Segment touched: 1
-Segment cached and touched: 1
+Segment cached: 0
+Segment touched: 244
+Segment cached and touched: 0
 
 
 
@@ -440,57 +405,36 @@ Segment cached and touched: 1
 ========  QUERY 31 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 847
-Segment cached and touched: 845
+Segment cached: 3299
+Segment touched: 3349
+Segment cached and touched: 1674
 
 
 lo_suppkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
+Segment cached: 916
+Segment touched: 836
+Segment cached and touched: 836
 
 
 lo_custkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
+Segment cached: 0
+Segment touched: 836
+Segment cached and touched: 0
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
+Segment cached: 916
+Segment touched: 836
+Segment cached and touched: 836
 
 
 lo_revenue
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
-
-
-c_custkey
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_nation
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_region
-Speedup: 0.000
 Segment cached: 0
-Segment touched: 2
+Segment touched: 836
 Segment cached and touched: 0
 
 
@@ -503,30 +447,30 @@ Segment cached and touched: 1
 
 s_nation
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 s_region
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 244
 Segment touched: 1
 Segment cached and touched: 1
 
 
 d_year
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 
@@ -535,58 +479,37 @@ Segment cached and touched: 1
 ========  QUERY 32 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 847
-Segment cached and touched: 847
+Segment cached: 3299
+Segment touched: 3349
+Segment cached and touched: 1674
 
 
 lo_suppkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
+Segment cached: 916
+Segment touched: 836
+Segment cached and touched: 836
 
 
 lo_custkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
+Segment cached: 0
+Segment touched: 836
+Segment cached and touched: 0
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
+Segment cached: 916
+Segment touched: 836
+Segment cached and touched: 836
 
 
 lo_revenue
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
-
-
-c_custkey
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_nation
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_city
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached: 0
+Segment touched: 836
+Segment cached and touched: 0
 
 
 s_suppkey
@@ -598,30 +521,30 @@ Segment cached and touched: 1
 
 s_nation
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 s_city
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 244
 Segment touched: 1
 Segment cached and touched: 1
 
 
 d_year
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 
@@ -630,58 +553,37 @@ Segment cached and touched: 1
 ========  QUERY 33 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 847
-Segment cached and touched: 847
+Segment cached: 3299
+Segment touched: 3349
+Segment cached and touched: 1674
 
 
 lo_suppkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
+Segment cached: 916
+Segment touched: 836
+Segment cached and touched: 836
 
 
 lo_custkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
+Segment cached: 0
+Segment touched: 836
+Segment cached and touched: 0
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
+Segment cached: 916
+Segment touched: 836
+Segment cached and touched: 836
 
 
 lo_revenue
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 209
-Segment cached and touched: 209
-
-
-c_custkey
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_nation
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_city
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached: 0
+Segment touched: 836
+Segment cached and touched: 0
 
 
 s_suppkey
@@ -693,30 +595,30 @@ Segment cached and touched: 1
 
 s_nation
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 s_city
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 244
 Segment touched: 1
 Segment cached and touched: 1
 
 
 d_year
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 
@@ -725,58 +627,37 @@ Segment cached and touched: 1
 ========  QUERY 34 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 27
-Segment cached and touched: 27
+Segment cached: 3299
+Segment touched: 61
+Segment cached and touched: 30
 
 
 lo_suppkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 4
-Segment cached and touched: 4
+Segment cached: 916
+Segment touched: 14
+Segment cached and touched: 14
 
 
 lo_custkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 4
-Segment cached and touched: 4
+Segment cached: 0
+Segment touched: 14
+Segment cached and touched: 0
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 4
-Segment cached and touched: 4
+Segment cached: 916
+Segment touched: 14
+Segment cached and touched: 14
 
 
 lo_revenue
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 4
-Segment cached and touched: 4
-
-
-c_custkey
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_nation
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_city
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached: 0
+Segment touched: 14
+Segment cached and touched: 0
 
 
 s_suppkey
@@ -788,30 +669,30 @@ Segment cached and touched: 1
 
 s_nation
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 s_city
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 244
 Segment touched: 1
 Segment cached and touched: 1
 
 
 d_yearmonthnum
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 
@@ -820,71 +701,50 @@ Segment cached and touched: 1
 ========  QUERY 41 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 1388
-Segment cached and touched: 1155
+Segment cached: 3299
+Segment touched: 6292
+Segment cached and touched: 3146
 
 
 lo_suppkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_custkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 0
+Segment touched: 916
+Segment cached and touched: 0
 
 
 lo_partkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 916
+Segment touched: 916
+Segment cached and touched: 916
 
 
 lo_revenue
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 229
-Segment cached and touched: 229
+Segment cached: 0
+Segment touched: 916
+Segment cached and touched: 0
 
 
 lo_supplycost
 Speedup: 0.000
 Segment cached: 0
-Segment touched: 229
-Segment cached and touched: 0
-
-
-c_custkey
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_nation
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_region
-Speedup: 0.000
-Segment cached: 0
-Segment touched: 2
+Segment touched: 916
 Segment cached and touched: 0
 
 
@@ -897,37 +757,37 @@ Segment cached and touched: 1
 
 s_region
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 p_partkey
 Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached: 153
+Segment touched: 153
+Segment cached and touched: 153
 
 
 p_mfgr
 Speedup: 0.000
 Segment cached: 0
-Segment touched: 2
+Segment touched: 153
 Segment cached and touched: 0
 
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
-Segment touched: 1
-Segment cached and touched: 1
+Segment cached: 244
+Segment touched: 244
+Segment cached and touched: 244
 
 
 d_year
 Speedup: 0.000
-Segment cached: 1
-Segment touched: 1
-Segment cached and touched: 1
+Segment cached: 0
+Segment touched: 244
+Segment cached and touched: 0
 
 
 
@@ -936,64 +796,50 @@ Segment cached and touched: 1
 ========  QUERY 42 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 351
-Segment cached and touched: 291
+Segment cached: 3299
+Segment touched: 1790
+Segment cached and touched: 818
 
 
 lo_suppkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 56
-Segment cached and touched: 56
+Segment cached: 916
+Segment touched: 221
+Segment cached and touched: 221
 
 
 lo_custkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 56
-Segment cached and touched: 56
+Segment cached: 0
+Segment touched: 221
+Segment cached and touched: 0
 
 
 lo_partkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 56
-Segment cached and touched: 56
+Segment cached: 916
+Segment touched: 221
+Segment cached and touched: 221
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 56
-Segment cached and touched: 56
+Segment cached: 916
+Segment touched: 221
+Segment cached and touched: 221
 
 
 lo_revenue
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 56
-Segment cached and touched: 56
+Segment cached: 0
+Segment touched: 221
+Segment cached and touched: 0
 
 
 lo_supplycost
 Speedup: 0.000
 Segment cached: 0
-Segment touched: 56
-Segment cached and touched: 0
-
-
-c_custkey
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_region
-Speedup: 0.000
-Segment cached: 0
-Segment touched: 2
+Segment touched: 221
 Segment cached and touched: 0
 
 
@@ -1006,51 +852,51 @@ Segment cached and touched: 1
 
 s_nation
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 s_region
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 p_partkey
 Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached: 153
+Segment touched: 153
+Segment cached and touched: 153
 
 
 p_category
 Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached: 0
+Segment touched: 153
+Segment cached and touched: 0
 
 
 p_mfgr
 Speedup: 0.000
 Segment cached: 0
-Segment touched: 2
+Segment touched: 153
 Segment cached and touched: 0
 
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 244
 Segment touched: 1
 Segment cached and touched: 1
 
 
 d_year
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 
@@ -1059,64 +905,50 @@ Segment cached and touched: 1
 ========  QUERY 43 ========
 ===========================
 
-Segment cached: 1164
-Segment touched: 351
-Segment cached and touched: 293
+Segment cached: 3299
+Segment touched: 1331
+Segment cached and touched: 665
 
 
 lo_suppkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 56
-Segment cached and touched: 56
+Segment cached: 916
+Segment touched: 221
+Segment cached and touched: 221
 
 
 lo_custkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 56
-Segment cached and touched: 56
+Segment cached: 0
+Segment touched: 221
+Segment cached and touched: 0
 
 
 lo_partkey
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 56
-Segment cached and touched: 56
+Segment cached: 916
+Segment touched: 221
+Segment cached and touched: 221
 
 
 lo_orderdate
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 56
-Segment cached and touched: 56
+Segment cached: 916
+Segment touched: 221
+Segment cached and touched: 221
 
 
 lo_revenue
 Speedup: 0.000
-Segment cached: 229
-Segment touched: 56
-Segment cached and touched: 56
+Segment cached: 0
+Segment touched: 221
+Segment cached and touched: 0
 
 
 lo_supplycost
 Speedup: 0.000
 Segment cached: 0
-Segment touched: 56
-Segment cached and touched: 0
-
-
-c_custkey
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-c_region
-Speedup: 0.000
-Segment cached: 0
-Segment touched: 2
+Segment touched: 221
 Segment cached and touched: 0
 
 
@@ -1129,51 +961,30 @@ Segment cached and touched: 1
 
 s_nation
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 s_city
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
-
-
-p_partkey
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-p_brand1
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
-
-
-p_category
-Speedup: 0.000
-Segment cached: 2
-Segment touched: 2
-Segment cached and touched: 2
+Segment cached and touched: 0
 
 
 d_datekey
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 244
 Segment touched: 1
 Segment cached and touched: 1
 
 
 d_year
 Speedup: 0.000
-Segment cached: 1
+Segment cached: 0
 Segment touched: 1
-Segment cached and touched: 1
+Segment cached and touched: 0
 
 
 

@@ -26,7 +26,7 @@ using namespace cub;
 using namespace std;
 using namespace tbb;
 
-#define SF 40
+#define SF 160
 #define NUM_EVENTS 2
 
 #define BASE_PATH "/home/huzam/Mordred/test/ssb/data/"
@@ -61,12 +61,12 @@ using namespace tbb;
 #define C_LEN 1200000
 #define D_LEN 2556
 #elif SF == 160
-#define DATA_DIR BASE_PATH "s160_columnar/"
+#define DATA_DIR BASE_PATH "s160_columnar_copy/"
 #define LO_LEN 960017453
-#define P_LEN 1600000
+#define P_LEN 160432128
 #define S_LEN 320000
-#define C_LEN 4800000
-#define D_LEN 2556
+#define C_LEN 158334976
+#define D_LEN 255600000
 #endif
 
 #define SEGMENT_SIZE 1048576
