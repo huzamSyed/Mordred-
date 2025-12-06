@@ -35,6 +35,8 @@ CPUGPUProcessing::resetTime() {
     gpu_to_cpu[sg] = 0;
   }
 
+  times.reset();
+
   transfer_time_total = 0;
   gpu_time_total = 0;
   cpu_time_total = 0;
@@ -372,6 +374,7 @@ CPUGPUProcessing::call_pfilter_probe_GPU(QueryParams* params, int** &off_col, in
   cudaEventElapsedTime(&time, start, stop);
   gpu_time[sg] += time;
 
+  times.pfilter_probe_gpu += time;
   if (verbose) cout << "Filter Probe Kernel time GPU: " << time << endl;
 
 };
@@ -511,6 +514,7 @@ CPUGPUProcessing::call_pfilter_probe_CPU(QueryParams* params, int** &h_off_col, 
   cudaEventRecord(stop, 0);
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
+  times.pfilter_probe_cpu += time;
   if (verbose) cout << "Filter Probe Kernel time CPU: " << time << endl;
   cpu_time[sg] += time;
 
@@ -627,7 +631,7 @@ CPUGPUProcessing::call_probe_group_by_GPU(QueryParams* params, int** &off_col, i
   cudaEventSynchronize(stop);               // Wait until the completion of all device 
                                             // work preceding the most recent call to cudaEventRecord()
   cudaEventElapsedTime(&time, start, stop); // Saving the time measured
-
+  times.probe_group_gpu += time;
   if (verbose) cout << "Probe Group Kernel time GPU: " << time << endl;
   gpu_time[sg] += time;
 
@@ -717,6 +721,7 @@ CPUGPUProcessing::call_probe_group_by_CPU(QueryParams* params, int** &h_off_col,
                                             // work preceding the most recent call to cudaEventRecord()
   cudaEventElapsedTime(&time, start, stop); // Saving the time measured
 
+  times.probe_group_cpu += time;
   if (verbose) cout << "Probe Group Kernel time CPU: " << time << endl;
   cpu_time[sg] += time;
 
@@ -863,6 +868,7 @@ CPUGPUProcessing::call_probe_GPU(QueryParams* params, int** &off_col, int* &d_to
   assert(*h_total <= output_estimate);
   // assert(*h_total > 0);
 
+  times.probe_gpu += time;
   if (verbose) cout << "Probe Kernel time GPU: " << time << endl;
   gpu_time[sg] += time;
 
@@ -982,6 +988,7 @@ CPUGPUProcessing::call_probe_CPU(QueryParams* params, int** &h_off_col, int* h_t
   assert(*h_total <= output_estimate);
   // assert(*h_total > 0);
 
+  times.probe_cpu += time;
   if (verbose) cout << "Probe Kernel time CPU: " << time << endl;
   cpu_time[sg] += time;
 };
@@ -1108,6 +1115,7 @@ CPUGPUProcessing::call_pfilter_GPU(QueryParams* params, int** &off_col, int* &d_
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
 
+  times.pfilter_gpu += time;
   if (verbose) cout << "Filter Kernel time GPU: " << time << endl;
   gpu_time[sg] += time;
 
@@ -1220,6 +1228,7 @@ CPUGPUProcessing::call_pfilter_CPU(QueryParams* params, int** &h_off_col, int* h
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
 
+  times.pfilter_cpu += time;
   if (verbose) cout << "Filter Kernel time CPU: " << time << endl;
   cpu_time[sg] += time;
 
@@ -1315,6 +1324,7 @@ CPUGPUProcessing::call_bfilter_build_GPU(QueryParams* params, int* &d_off_col, i
     cudaEventSynchronize(stop);
     cudaEventElapsedTime(&time, start, stop);
 
+    times.bfilter_build_gpu += time;
     if (verbose) cout << "Filter Build Kernel time GPU: " << time << endl;
     gpu_time[sg] += time;
   }
@@ -1384,6 +1394,7 @@ CPUGPUProcessing::call_bfilter_build_CPU(QueryParams* params, int* &h_off_col, i
     cudaEventSynchronize(stop);
     cudaEventElapsedTime(&time, start, stop);
 
+    times.bfilter_build_cpu += time;
     if (verbose) cout << "Filter Build Kernel time CPU: " << time << endl;
     cpu_time[sg] += time;
 
@@ -1468,6 +1479,7 @@ CPUGPUProcessing::call_build_GPU(QueryParams* params, int* &d_off_col, int* h_to
     cudaEventSynchronize(stop);
     cudaEventElapsedTime(&time, start, stop);
 
+    times.build_gpu += time;
     if (verbose) cout << "Build Kernel time GPU: " << time << endl;
     gpu_time[sg] += time;
   }
@@ -1527,6 +1539,7 @@ CPUGPUProcessing::call_build_CPU(QueryParams* params, int* &h_off_col, int* h_to
     cudaEventSynchronize(stop);
     cudaEventElapsedTime(&time, start, stop);
 
+    times.build_cpu += time;
     if (verbose) cout << "Build Kernel time CPU: " << time << endl;
     cpu_time[sg] += time;
   }
@@ -1612,6 +1625,7 @@ CPUGPUProcessing::call_bfilter_GPU(QueryParams* params, int* &d_off_col, int* &d
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
 
+  times.bfilter_gpu += time;
   if (verbose) cout << "Filter Kernel time GPU: " << time << endl;
   gpu_time[sg] += time;
 };
@@ -1673,6 +1687,7 @@ CPUGPUProcessing::call_bfilter_CPU(QueryParams* params, int* &h_off_col, int* h_
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
 
+  times.bfilter_cpu += time;
   if (verbose) cout << "Filter Kernel time CPU: " << time << endl;
   cpu_time[sg] += time;
 
@@ -1738,6 +1753,7 @@ CPUGPUProcessing::call_group_by_GPU(QueryParams* params, int** &off_col, int* h_
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
 
+  times.group_gpu += time;
   if (verbose) cout << "Group Kernel time GPU: " << time << endl;
   gpu_time[sg] += time;
 };
@@ -1792,6 +1808,7 @@ CPUGPUProcessing::call_group_by_CPU(QueryParams* params, int** &h_off_col, int* 
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
 
+  times.group_cpu += time;
   if (verbose) cout << "Group Kernel time CPU: " << time << endl;
   cpu_time[sg] += time;
 
@@ -1836,6 +1853,7 @@ CPUGPUProcessing::call_aggregation_GPU(QueryParams* params, int* &off_col, int* 
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
 
+  times.agg_gpu += time;
   if (verbose) cout << "Aggr Kernel time GPU: " << time << endl;
   gpu_time[sg] += time;
 };
@@ -1872,6 +1890,7 @@ CPUGPUProcessing::call_aggregation_CPU(QueryParams* params, int* &h_off_col, int
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
 
+  times.agg_cpu += time;
   if (verbose) cout << "Aggr Kernel time CPU: " << time << endl;
   cpu_time[sg] += time;
 };
@@ -1972,6 +1991,7 @@ CPUGPUProcessing::call_probe_aggr_GPU(QueryParams* params, int** &off_col, int* 
                                             // work preceding the most recent call to cudaEventRecord()
   cudaEventElapsedTime(&time, start, stop); // Saving the time measured
 
+  times.probe_agg_gpu += time;
   if (verbose) cout << "Probe Aggr Kernel time GPU: " << time << endl;
   gpu_time[sg] += time;
 };
@@ -2044,6 +2064,7 @@ CPUGPUProcessing::call_probe_aggr_CPU(QueryParams* params, int** &h_off_col, int
                                             // work preceding the most recent call to cudaEventRecord()
   cudaEventElapsedTime(&time, start, stop); // Saving the time measured
 
+  times.probe_agg_cpu += time;
   if (verbose) cout << "Probe Aggr Kernel time CPU: " << time << endl;
   cpu_time[sg] += time;
 
@@ -2167,6 +2188,7 @@ CPUGPUProcessing::call_pfilter_probe_aggr_GPU(QueryParams* params, int** &off_co
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
 
+  times.pfilter_probe_agg_gpu += time;
   if (verbose) cout << "Filter Probe Aggr Kernel time GPU: " << time << endl;
   gpu_time[sg] += time;
 
@@ -2257,6 +2279,7 @@ CPUGPUProcessing::call_pfilter_probe_aggr_CPU(QueryParams* params, int** &h_off_
   cudaEventSynchronize(stop);
   cudaEventElapsedTime(&time, start, stop);
 
+  times.pfilter_probe_agg_cpu += time;
   if (verbose) cout << "Filter Probe Aggr Kernel time CPU: " << time << endl;
   cpu_time[sg] += time;
 };

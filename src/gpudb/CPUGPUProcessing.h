@@ -8,11 +8,71 @@
 
 #define OD_BATCH_SIZE 8
 
+struct times {
+    double pfilter_probe_gpu = 0;
+    double pfilter_probe_cpu = 0;
+    double probe_group_gpu = 0;
+    double probe_group_cpu = 0;
+    double probe_gpu = 0;
+    double probe_cpu = 0;
+    double pfilter_gpu = 0;
+    double pfilter_cpu = 0;
+    double bfilter_build_gpu = 0;
+    double bfilter_build_cpu = 0;
+    double build_gpu = 0;
+    double build_cpu = 0;
+    double bfilter_gpu = 0;
+    double bfilter_cpu = 0;
+    double group_gpu = 0;
+    double group_cpu = 0;
+    double agg_gpu = 0;
+    double agg_cpu = 0;
+    double probe_agg_gpu = 0;
+    double probe_agg_cpu = 0;
+    double pfilter_probe_agg_gpu = 0;
+    double pfilter_probe_agg_cpu = 0;
+
+    void print() const {
+        auto print_if_nonzero = [](const char* name, float value) {
+            if (value != 0.0f)
+                std::cout << name << ": " << value << "\n";
+        };
+
+        print_if_nonzero("pfilter_probe_gpu", pfilter_probe_gpu);
+        print_if_nonzero("pfilter_probe_cpu", pfilter_probe_cpu);
+        print_if_nonzero("probe_group_gpu", probe_group_gpu);
+        print_if_nonzero("probe_group_cpu", probe_group_cpu);
+        print_if_nonzero("probe_gpu", probe_gpu);
+        print_if_nonzero("probe_cpu", probe_cpu);
+        print_if_nonzero("pfilter_gpu", pfilter_gpu);
+        print_if_nonzero("pfilter_cpu", pfilter_cpu);
+        print_if_nonzero("bfilter_build_gpu", bfilter_build_gpu);
+        print_if_nonzero("bfilter_build_cpu", bfilter_build_cpu);
+        print_if_nonzero("build_gpu", build_gpu);
+        print_if_nonzero("build_cpu", build_cpu);
+        print_if_nonzero("bfilter_gpu", bfilter_gpu);
+        print_if_nonzero("bfilter_cpu", bfilter_cpu);
+        print_if_nonzero("group_gpu", group_gpu);
+        print_if_nonzero("group_cpu", group_cpu);
+        print_if_nonzero("agg_gpu", agg_gpu);
+        print_if_nonzero("agg_cpu", agg_cpu);
+        print_if_nonzero("probe_agg_gpu", probe_agg_gpu);
+        print_if_nonzero("probe_agg_cpu", probe_agg_cpu);
+        print_if_nonzero("pfilter_probe_agg_gpu", pfilter_probe_agg_gpu);
+        print_if_nonzero("pfilter_probe_agg_cpu", pfilter_probe_agg_cpu);
+    }
+
+    void reset() {
+        *this = times();
+    }
+};
+
 class CPUGPUProcessing {
 public:
   CacheManager* cm;
   QueryOptimizer* qo;
 
+  times times;
   bool custom;
   bool skipping;
 

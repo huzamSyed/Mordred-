@@ -11,3 +11,4 @@ config.mk
 config.cmake
 build/
 .cache/
+results

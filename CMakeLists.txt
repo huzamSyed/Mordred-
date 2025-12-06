@@ -32,8 +32,6 @@ set(SM_DEF "-DSM700")
 
 # --- Compile options ---
 set(NVCC_FLAGS
-    --std=c++14
-    ${SM_DEF}
     "-Xptxas=-dlcm=cg;-v"
     -lineinfo
     "-Xcudafe=--display_error_number"
@@ -67,6 +65,7 @@ add_compile_definitions(
 add_executable(main ${GPUSOURCES})
 set_target_properties(main PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${BIN}/gpudb"
+    CUDA_ARCHITECTURES native
     CUDA_SEPARABLE_COMPILATION ON
 )
 target_compile_definitions(main PRIVATE
@@ -82,6 +81,36 @@ target_compile_definitions(main PRIVATE
 )
 target_compile_options(main PRIVATE ${NVCC_FLAGS} ${OPENMP_FLAGS})
 target_link_libraries(main PRIVATE ${LINK_LIBS})
+
+set(TESTSOURCES
+    ${SRC}/gpudb/test.cu
+    ${SRC}/gpudb/CacheManager.cu
+    ${SRC}/gpudb/QueryOptimizer.cu
+    ${SRC}/gpudb/CPUProcessing.cu
+    ${SRC}/gpudb/CPUGPUProcessing.cu
+    ${SRC}/gpudb/QueryProcessing.cu
+    ${SRC}/gpudb/CostModel.cu
+)
+
+add_executable(test ${TESTSOURCES})
+set_target_properties(test PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${BIN}/gpudb"
+    CUDA_ARCHITECTURES native
+    CUDA_SEPARABLE_COMPILATION ON
+)
+target_compile_definitions(test PRIVATE
+    MOD_PATH="${MOD_PATH}"
+    SF=${SF}
+    BASE_PATH="${BASE_PATH}"
+    DATA_DIR="${DATA_DIR}"
+    LO_LEN=${LO_LEN}
+    P_LEN=${P_LEN}
+    S_LEN=${S_LEN}
+    C_LEN=${C_LEN}
+    D_LEN=${D_LEN}
+)
+target_compile_options(test PRIVATE ${NVCC_FLAGS} ${OPENMP_FLAGS})
+target_link_libraries(test PRIVATE ${LINK_LIBS})
 
 set(MINMAX_SOURCES
     ${SRC}/gpudb/minmax.cpp

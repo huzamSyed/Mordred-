@@ -28,6 +28,14 @@ case "$SF" in
   C_LEN=300000
   D_LEN=2556
   ;;
+15)
+  DATA_DIR=${BASE_PATH}s15_columnar/
+  LO_LEN=89987410 
+  P_LEN=800000
+  S_LEN=20000
+  C_LEN=450000
+  D_LEN=2556
+  ;; 
 20)
   DATA_DIR=${BASE_PATH}s20_columnar/
   LO_LEN=119994746
@@ -58,42 +66,41 @@ case "$SF" in
   ;;
 esac
 
-# cd test/ || exit
-# cd ssb/dbgen/ || exit
-# make || exit
-# cd ../loader || exit
-# make || exit
+(
+  echo "set(SF \"${SF}\")"
+  echo "set(MOD_PATH \"${MOD_PATH}\")"
+  echo "set(BASE_PATH \"${BASE_PATH}\")"
+  echo "set(DATA_DIR \"${DATA_DIR}\")"
+  echo "set(LO_LEN \"${LO_LEN}\")"
+  echo "set(P_LEN \"${P_LEN}\")"
+  echo "set(S_LEN \"${S_LEN}\")"
+  echo "set(C_LEN \"${C_LEN}\")"
+  echo "set(D_LEN \"${D_LEN}\")"
+) | tee config.cmake
+(
+  echo "SF=${SF}"
+  echo "MOD_PATH=${MOD_PATH}"
+  echo "BASE_PATH=${BASE_PATH}"
+  echo "DATA_DIR=${DATA_DIR}"
+  echo "LO_LEN=${LO_LEN}"
+  echo "P_LEN=${P_LEN}"
+  echo "S_LEN=${S_LEN}"
+  echo "C_LEN=${C_LEN}"
+  echo "D_LEN=${D_LEN}"
+) | tee config.mk
 
-# cd ../../ || exit
-# python util.py ssb $SF gen
-# python util.py ssb $SF transform
+if [ -z ${3+x} ]; then
+  exit 0
+fi
 
-# cd ssb/loader || exit
-# make sort || exit
-# ./columnSort ../data/s${SF}_columnar/LINEORDER ../data/s${SF}_columnar/LINEORDERSORT 5 16 ${C_LEN} || exit
+cd test/ || exit 1
+# echo "Generating SSB with SF ${SF}"
+# yes | /bin/python3 util.py ssb $SF gen
+# echo "Transforming SSB with SF ${SF}"
+# yes | /bin/python3 util.py ssb $SF transform
 
-# cd ../../../ || exit
+cd ssb/loader || exit 1
+echo "Sorting Data"
+yes | ./columnSort ../data/s${SF}_columnar/LINEORDER ../data/s${SF}_columnar/LINEORDERSORT 5 16 ${LO_LEN}
 
-  (
-    echo "set(SF \"${SF}\")"
-    echo "set(MOD_PATH \"${MOD_PATH}\")"
-    echo "set(BASE_PATH \"${BASE_PATH}\")"
-    echo "set(DATA_DIR \"${DATA_DIR}\")"
-    echo "set(LO_LEN \"${LO_LEN}\")"
-    echo "set(P_LEN \"${P_LEN}\")"
-    echo "set(S_LEN \"${S_LEN}\")"
-    echo "set(C_LEN \"${C_LEN}\")"
-    echo "set(D_LEN \"${D_LEN}\")"
-  ) | tee config.cmake
-  (
-    echo "SF=${SF}"
-    echo "MOD_PATH=${MOD_PATH}"
-    echo "BASE_PATH=${BASE_PATH}"
-    echo "DATA_DIR=${DATA_DIR}"
-    echo "LO_LEN=${LO_LEN}"
-    echo "P_LEN=${P_LEN}"
-    echo "S_LEN=${S_LEN}"
-    echo "C_LEN=${C_LEN}"
-    echo "D_LEN=${D_LEN}"
-  ) | tee config.mk
-
+cd ../../../ || exit 1
